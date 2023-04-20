@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+crowe_erp.access_cost_sheet,access_cost_sheet,crowe_erp.model_cost_sheet,base.group_user,1,1,1,1
+crowe_erp.access_cost_sheet_line,access_cost_sheet_line,crowe_erp.model_cost_sheet_line,base.group_user,1,1,1,1
+crowe_erp.access_work_order,access_work_order,crowe_erp.model_work_order,base.group_user,1,1,1,1
+crowe_erp.access_cost_sheet_service_line,access_cost_sheet_service_line,crowe_erp.model_cost_sheet_service_line,base.group_user,1,1,1,1
+crowe_erp.access_questionnaire,access_questionnaire,crowe_erp.model_questionnaire,base.group_user,1,1,1,1
+crowe_erp.access_send_loe_wizard,access_send_loe_wizard,crowe_erp.model_send_loe_wizard,base.group_user,1,1,1,1
+crowe_erp.access_project_crowe_report,access_project_crowe_report,crowe_erp.model_project_crowe_report,base.group_user,1,1,1,1
+crowe_erp.access_survey_selection,access_survey_selection,crowe_erp.model_survey_selection,base.group_user,1,1,1,1
+crowe_erp.access_advance_invoice_wo,access_advance_invoice_wo,crowe_erp.model_advance_invoice_wo,base.group_user,1,1,1,1
+crowe_erp.access_advance_invoice_wo_line,access_advance_invoice_wo_line,crowe_erp.model_advance_invoice_wo_line,base.group_user,1,1,1,1

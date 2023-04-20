@@ -1,0 +1,37 @@
+<template>
+    <t t-name="FInherit"
+       t-inherit="point_of_sale.CustomerFacingDisplayOrder"
+       t-inherit-mode="extension" owl="1">
+        <xpath expr="//t[@t-call='CustomerFacingDisplayOrderLines']"
+               position="after">
+            <t t-call="CustomerProductSuggestionDisplay"/>
+        </xpath>
+    </t>
+    <t t-name="CustomerProductSuggestionDisplay">
+        <t t-if="order">
+            <div class="container">
+                <div class="row">
+                    <t t-foreach="order.get_orderlines()" t-as="orderline"
+                       class="pos_orderlines_item">
+                        <t t-if="orderline.get_product().get_suggestion_product_ids()">
+                            <div class="col-sm"
+                                 t-foreach="orderline.get_product().get_suggestion_product_ids()"
+                                 t-as="suggestion_product">
+                                <div class="card"
+                                     style="width: 5rem;">
+                                    <img t-attf-src="/web/image?model=product.template&amp;field=image_128&amp;id={{ suggestion_product['id'] }}"/>
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <t t-esc="suggestion_product['name']"/>
+                                            <t t-esc="suggestion_product['price']"/>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </t>
+</template>

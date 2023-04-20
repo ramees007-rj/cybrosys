@@ -1,0 +1,41 @@
+<odoo>
+    <record id="action_letter_of_engagement" model="ir.actions.report">
+        <field name="name">Letter of engagement</field>
+        <field name="model">send.loe.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">crowe_erp.employee_attendance_report</field>
+        <field name="report_file">
+            crowe_erp.employee_attendance_report
+        </field>
+        <field name="print_report_name">’Letter of Engagement'</field>
+        <field name="binding_type">report</field>
+    </record>
+    <record id="action_report_control_sheet" model="ir.actions.report">
+        <field name="name">Report Control Sheet</field>
+        <field name="model">project.task</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">crowe_erp.report_control_sheet_template_print</field>
+        <field name="report_file">
+            crowe_erp.report_control_sheet_template
+        </field>
+        <field name="print_report_name">Report Control Sheet</field>
+    </record>
+    <record id="action_report_work_order" model="ir.actions.report">
+        <field name="name">Work Order</field>
+        <field name="model">work.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">crowe_erp.work_order_template</field>
+        <field name="report_file">crowe_erp.work_order_template</field>
+        <field name="binding_model_id" ref="model_work_order"/>
+        <field name="binding_type">report</field>
+    </record>
+    <record id="action_report_cost_sheet" model="ir.actions.report">
+        <field name="name">Cost Sheet</field>
+        <field name="model">cost.sheet</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">crowe_erp.cost_sheet_template</field>
+        <field name="report_file">crowe_erp.cost_sheet_template</field>
+        <field name="binding_model_id" ref="model_cost_sheet"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

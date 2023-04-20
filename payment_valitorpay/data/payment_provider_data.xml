@@ -1,0 +1,21 @@
+<odoo>
+    <record id="payment_provider_valitor" model="payment.provider">
+        <field name="name">Valitor Pay</field>
+        <field name="code">valitorpay</field>
+        <field name="company_id" ref="base.main_company"/>
+         <field name="redirect_form_view_id" ref="redirect_form"/>
+        <field name="display_as">Valitor Pay</field>
+        <field name="image_128" type="base64"
+               file="payment_valitorpay/static/description/icon.png"/>
+        <field name="payment_icon_ids"
+               eval="[(6, 0, [
+                   ref('payment.payment_icon_cc_mastercard'),
+                   ref('payment.payment_icon_cc_visa'),
+                   ref('payment.payment_icon_cc_american_express'),
+                   ref('payment.payment_icon_cc_diners_club_intl'),
+                   ref('payment.payment_icon_cc_jcb'),
+               ])]"/>
+        <field name="available_country_ids"
+               eval="[(6, 0, [ref('base.at'),ref('base.be'),ref('base.us'),ref('base.in'),ref('base.bg'), ref('base.hr'),ref('base.cy'),ref('base.cz'),ref('base.dk'), ref('base.ee'),ref('base.fi'),ref('base.fr'),ref('base.de'), ref('base.gr'),ref('base.hu'),ref('base.it'),ref('base.lv'), ref('base.lt'),ref('base.lu'),ref('base.mt'),ref('base.nl'), ref('base.pl'),ref('base.pt'),ref('base.ro'),ref('base.sk'), ref('base.si'), ref('base.es'),ref('base.se'),ref('base.li'), ref('base.no'),ref('base.is'),ref('base.uk'),ref('base.ie')])]"/>
+    </record>
+</odoo>

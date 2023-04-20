@@ -1,0 +1,109 @@
+<odoo>
+    <template id="cost_sheet_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <h1 class="mt-4">
+                            <span>Cost Sheet #</span>
+                            <span t-field="o.reference_no"/>
+                        </h1>
+                        <div class="row mt-4 mb-4">
+                            <div class="col-auto col-3 mw-100 mb-2">
+                                <h2 class="mt-4">
+                                    <span style="font-weight: bold;">
+                                        <strong>Customer:</strong>
+                                    </span>
+                                    <span t-field="o.partner_id.name"/>
+                                </h2>
+                            </div>
+                            <div class="col-auto col-3 mw-100 mb-2">
+                                <h2 class="mt-4">
+                                    <span style="font-weight: bold;">
+                                        <strong>Prepared Date:</strong>
+                                    </span>
+                                    <span t-field="o.prepared_date"/>
+                                </h2>
+                            </div>
+                        </div>
+                        <table class="table table-sm o_main_table mt-4">
+                            <thead style="display: table-row-group">
+                                <tr>
+                                    <th colspan="2" class="text-start">
+                                        #Services
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th class="text-start">Service</th>
+                                    <th class="text-start">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.service_product_ids"
+                                    t-as="service">
+                                    <td>
+                                        <t t-esc="service.product_id.name"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="service.name"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-sm o_main_table mt-4">
+                            <thead style="display: table-row-group">
+                                <tr>
+                                    <th colspan="5" class="text-start">
+                                        #Expected Amount
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th class="text-start">Service</th>
+                                    <th class="text-start">Designation</th>
+                                    <th class="text-start">Cost</th>
+                                    <th class="text-start">Man Hours</th>
+                                    <th class="text-start">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.cost_sheet_line_ids"
+                                    t-as="csl">
+                                    <td>
+                                        <t t-esc="csl.product_id.name"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="csl.designation_id.name"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="csl.cost"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="csl.man_hours"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="csl.total"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="mt-4">
+                            <h2>
+                                <span style="color:black;">Admin Expenses:</span>
+                                <span style="color:black;" t-field="o.admin_expenses"/>
+                            </h2>
+                            <h2>
+                                <span style="color:black;">Other Expenses:</span>
+                                <span style="color:black;" t-field="o.other_expenses"/>
+                            </h2>
+                            <h2>
+                                <span style="color:black;">Other Expenses:</span>
+                                <span style="color:black;" t-field="o.grand_total"/>
+                            </h2>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

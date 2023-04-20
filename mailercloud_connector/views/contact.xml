@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+        <record id="contact_form_view" model="ir.ui.view">
+            <field name="name">contact.form.view</field>
+            <field name="model">contact.list</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="middle_name"/>
+                                <field name="last_name"/>
+                                <field name="email"/>
+                                <field name="phone"/>
+                            </group>
+                            <group>
+                                <field name="city"/>
+                                <field name="state"/>
+                                <field name="country"/>
+                                <field name="zip"/>
+                                <field name="contact_type"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

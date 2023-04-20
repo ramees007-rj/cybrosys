@@ -1,0 +1,168 @@
+<odoo>
+    <record id="ir_sequence_work_order" model="ir.sequence">
+        <field name="name">Work Order</field>
+        <field name="code">work.order</field>
+        <field name="prefix">WRK</field>
+        <field name="padding">5</field>
+        <field name="suffix">/%(year)s</field>
+    </record>
+    <record id="work_order_view_form" model="ir.ui.view">
+        <field name="name">work.order.view.form</field>
+        <field name="model">work.order</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_approve" string="Approve"
+                            groups="account.group_account_readonly,account.group_account_invoice"
+                            type="object"
+                            attrs="{'invisible':[('task_state','not in',['new','allocated'])]}"
+                            class="btn-primary"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="task_id" invisible="1"/>
+                            <field name="project_id"/>
+                            <field name="partner_id"/>
+                            <field name="nature_of_work"/>
+                            <field name="staff_in_charge_id"/>
+                            <field name="task_state" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="date_of_commencement"/>
+                            <field name="tentative_date"/>
+                            <field name="invoice_percentage"/>
+                            <field name="agreed_amount"/>
+                            <field name="advance_amount"/>
+                            <field name="outstanding_amount"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="audit_planning_and_budget"
+                              string="Audit Planning and Budget">
+                            <group>
+                                <group>
+                                    <field name="constitution"/>
+                                    <field name="comm_reg_no"/>
+                                    <field name="accounting_period"/>
+                                </group>
+                                <group>
+                                    <field name="members"/>
+                                    <field name="reg_capital"/>
+                                    <field name="main_activities"/>
+                                </group>
+                            </group>
+                            <div>
+                                <label for="current_year_budget"/>
+                                <field name="current_year_budget"/>
+                            </div>
+                            <div>
+                                <label for="risk"/>
+                                <field name="risk" widget="radio"
+                                       options="{'horizontal': true}"/>
+                            </div>
+                        </page>
+                        <page string="Client Risk Assessment"
+                              name="client_risk_assessment">
+                            <group>
+                                <field name="is_inherent" widget="radio"
+                                       options="{'horizontal': true}"/>
+                                <field name="is_entity" widget="radio"
+                                       options="{'horizontal': true}"/>
+                                <field name="is_non_availability"
+                                       widget="radio"
+                                       options="{'horizontal': true}"/>
+                                <field name="is_proper_account"
+                                       widget="radio"
+                                       options="{'horizontal': true}"/>
+                                <field name="is_bank_facilities"
+                                       widget="radio"
+                                       options="{'horizontal': true}"/>
+                                <field name="is_doubts_entity" widget="radio"
+                                       options="{'horizontal': true}"/>
+                                <field name="is_significant_estimate"
+                                       widget="radio"
+                                       options="{'horizontal': true}"/>
+                                <field name="is_related_party" widget="radio"
+                                       options="{'horizontal': true}"/>
+                                <field name="is_previous_audit"
+                                       widget="radio"
+                                       options="{'horizontal': true}"/>
+                                <field name="is_fraud_activities"
+                                       widget="radio"
+                                       options="{'horizontal': true}"/>
+                                <field name="risk" widget="radio"
+                                       options="{'horizontal': true}"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="work_order_tree_view" model="ir.ui.view">
+        <field name="name">work.order.tree.view</field>
+        <field name="model">work.order</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="date_of_commencement"/>
+                <field name="agreed_amount"/>
+                <field name="advance_amount"/>
+                <field name="outstanding_amount"/>
+                <field name="staff_in_charge_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="work_order_action" model="ir.actions.act_window">
+        <field name="name">Work Order</field>
+        <field name="res_model">work.order</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="work_order_menu"
+              name="Work Order"
+              parent="project.menu_main_pm"
+              action="work_order_action"
+              sequence="3"
+    />
+
+
+    <!--    WorkOrder Wizard-->
+    <record id="work_order_wizard_form_view" model="ir.ui.view">
+        <field name="name">work.order.wizard.form.view</field>
+        <field name="model">advance.invoice.wo</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="task_id" invisible="1"/>
+                    <label for="project_id"/>
+                    <field name="project_id"/>
+                    <field name="work_order_id">
+                        <tree editable="bottom">
+                            <field name="wo_id"/>
+                            <field name="amount" total="sum"/>
+                        </tree>
+                    </field>
+                </sheet>
+                <footer>
+                    <button name="action_create_invoice"
+                            string="Create Invoice" type="object"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

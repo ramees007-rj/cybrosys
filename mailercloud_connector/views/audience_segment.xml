@@ -1,0 +1,13 @@
+<odoo>
+    <record id="audience_segment_action"
+            model="ir.actions.act_window">
+        <field name="name">Audience Segment</field>
+        <field name="res_model">audience.segment</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+        <menuitem id="main_mailer_cloud_audience_segment"
+                  name="Segments"
+                  parent="main_mailer_cloud_audience"
+                  action="audience_segment_action"
+                  sequence="1"/>
+</odoo>

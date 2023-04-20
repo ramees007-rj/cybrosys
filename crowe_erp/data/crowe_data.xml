@@ -1,0 +1,2154 @@
+<odoo>
+    <data>
+        <!--        Creating a survey for questionnaire-->
+        <record id="crowe_questionnaire_survey" model="survey.survey">
+            <field name="title">Crowe Questionnaire</field>
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="access_mode">public</field>
+            <field name="users_can_go_back" eval="False"/>
+            <field name="scoring_type">scoring_with_answers</field>
+            <field name="questions_layout">page_per_section</field>
+            <field name="description" type="html">
+                <p>Survey for collecting customer details</p>
+            </field>
+        </record>
+        <!-- Page 1: Checking existing customer or not -->
+        <record id="crowe_questionnaire_survey_question_p1"
+                model="survey.question">
+            <field name="title">Check Customer</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">1</field>
+            <field name="question_type" eval="False"/>
+            <field name="is_page" eval="True"/>
+            <field name="description" type="html">
+                <p>Checking Customer is existing or not. If customer exist
+                    override the data else created
+                </p>
+            </field>
+        </record>
+        <record id="crowe_questionnaire_survey_question1"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">2</field>
+            <field name="title">Existing Customer</field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+        </record>
+        <record model="survey.question.answer"
+                id="crowe_questionnaire_survey_question1_c1">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question1"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record model="survey.question.answer"
+                id="crowe_questionnaire_survey_question1_c2">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question1"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question2"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">3</field>
+            <field name="title">Do you want to override the data?</field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question1"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question1_c1"/>
+        </record>
+        <record model="survey.question.answer"
+                id="crowe_questionnaire_survey_question2_c1">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question2"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record model="survey.question.answer"
+                id="crowe_questionnaire_survey_question2_c2">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question2"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question4"
+                model="survey.question">
+            <field name="title">Select your Previous Data</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="sequence">4</field>
+            <field name="question_type">Many2one</field>
+            <field name="model_name" ref="crowe_erp.model_questionnaire"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question2"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question2_c1"/>
+        </record>
+        <!-- Page 2: Company Name -->
+        <record id="crowe_questionnaire_survey_question_p2"
+                model="survey.question">
+            <field name="title">Company Details</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">20</field>
+            <field name="question_type" eval="False"/>
+            <field name="is_page" eval="True"/>
+            <field name="description" type="html">
+                <p>Some general information about you. It will be used
+                    internally for statistics only.
+                </p>
+            </field>
+        </record>
+        <record id="crowe_questionnaire_survey_question5"
+                model="survey.question">
+            <field name="title">Name of the company:</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">21</field>
+            <field name="question_type">char_box</field>
+            <field name="constr_mandatory" eval="True"/>
+        </record>
+        <!--        company address-->
+        <record id="crowe_questionnaire_survey_question_p3"
+                model="survey.question">
+            <field name="title">Company Address</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">22</field>
+            <field name="question_type" eval="False"/>
+            <field name="is_page" eval="True"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question7"
+                model="survey.question">
+            <field name="title">P.O.Box</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">24</field>
+            <field name="question_type">char_box</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question8"
+                model="survey.question">
+            <field name="title">P.C</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">25</field>
+            <field name="question_type">char_box</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question9"
+                model="survey.question">
+            <field name="title">City</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">26</field>
+            <field name="question_type">char_box</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question10"
+                model="survey.question">
+            <field name="title">Country</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">27</field>
+            <field name="question_type">char_box</field>
+            <field name="question_type">Many2one</field>
+            <field name="model_name" ref="base.model_res_country"/>
+        </record>
+        <!--        company details-->
+        <record id="crowe_questionnaire_survey_question_p4"
+                model="survey.question">
+            <field name="title">Company Details</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">34</field>
+            <field name="question_type" eval="False"/>
+            <field name="is_page" eval="True"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question30"
+                model="survey.question">
+            <field name="title">Telephone Number</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">35</field>
+            <field name="question_type">char_box</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question31"
+                model="survey.question">
+            <field name="title">Phone Number</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">36</field>
+            <field name="question_type">char_box</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question32"
+                model="survey.question">
+            <field name="title">Email ID:</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">37</field>
+            <field name="question_type">char_box</field>
+            <field name="validation_email">True</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question33"
+                model="survey.question">
+            <field name="title">Website:</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">38</field>
+            <field name="question_type">char_box</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question34"
+                model="survey.question">
+            <field name="title">Location: HO, Administration, Accounts, and
+                Factory:
+            </field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">39</field>
+            <field name="question_type">text_box</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question35"
+                model="survey.question">
+            <field name="title">Nature of entity:</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">40</field>
+            <field name="question_type">text_box</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question36"
+                model="survey.question">
+            <field name="title">Industry:</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">41</field>
+            <field name="question_type">Many2one</field>
+            <field name="model_name" ref="base.model_res_partner_industry"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question37"
+                model="survey.question">
+            <field name="title">If other industry, kindly specify:</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">42</field>
+            <field name="question_type">text_box</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question38"
+                model="survey.question">
+            <field name="title">Company registration No:</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">43</field>
+            <field name="question_type">char_box</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question39"
+                model="survey.question">
+            <field name="title">Year and Date of company registration:</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">44</field>
+            <field name="question_type">date</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question40"
+                model="survey.question">
+            <field name="title">IT Registration Number (TIN #):</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">45</field>
+            <field name="question_type">numerical_box</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question41"
+                model="survey.question">
+            <field name="title">VAT Number (VATIN #):</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">46</field>
+            <field name="question_type">char_box</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question42"
+                model="survey.question">
+            <field name="title">Tax Card #:</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">47</field>
+            <field name="question_type">numerical_box</field>
+        </record>
+        <!-- Page 2: Contact details -->
+        <record id="crowe_questionnaire_survey_question_p5"
+                model="survey.question">
+            <field name="title">Contact Details</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">50</field>
+            <field name="question_type" eval="False"/>
+            <field name="is_page" eval="True"/>
+            <field name="description" type="html">
+                <p>Please submit a contact detail
+                </p>
+            </field>
+        </record>
+        <record id="crowe_questionnaire_survey_question50"
+                model="survey.question">
+            <field name="title">Contact Name</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">51</field>
+            <field name="question_type">char_box</field>
+            <field name="constr_mandatory" eval="True"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question51"
+                model="survey.question">
+            <field name="title">Designation</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">52</field>
+            <field name="question_type">char_box</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question52"
+                model="survey.question">
+            <field name="title">If other designation, kindly specify</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">53</field>
+            <field name="question_type">char_box</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question53"
+                model="survey.question">
+            <field name="title">Mobile No</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">54</field>
+            <field name="question_type">char_box</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question54"
+                model="survey.question">
+            <field name="title">Phone</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">55</field>
+            <field name="question_type">char_box</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question55"
+                model="survey.question">
+            <field name="title">Email</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">56</field>
+            <field name="question_type">char_box</field>
+            <field name="validation_email">True</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question56"
+                model="survey.question">
+            <field name="title">CEO/GM Name</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">57</field>
+            <field name="question_type">char_box</field>
+            <field name="validation_email">True</field>
+        </record>
+        <!--        Page 3: More details-->
+        <record id="crowe_questionnaire_survey_question_p7"
+                model="survey.question">
+            <field name="title">More Details</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">70</field>
+            <field name="question_type" eval="False"/>
+            <field name="is_page" eval="True"/>
+            <field name="description" type="html">
+                <p>More details about your organization
+                </p>
+            </field>
+        </record>
+        <record id="crowe_questionnaire_survey_question71"
+                model="survey.question">
+            <field name="title">ERP/Accounting/Production/Stores software
+                followed
+            </field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">71</field>
+            <field name="question_type">char_box</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question72"
+                model="survey.question">
+            <field name="title">No. of employees</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">72</field>
+            <field name="question_type">numerical_box</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question73"
+                model="survey.question">
+            <field name="title">Date of commencement of activities</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">73</field>
+            <field name="question_type">date</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question74"
+                model="survey.question">
+            <field name="title">Organization structure</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">74</field>
+            <field name="question_type">char_box</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question80"
+                model="survey.question">
+            <field name="title">Registered capital</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">80</field>
+            <field name="question_type">numerical_box</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question81"
+                model="survey.question">
+            <field name="title">Invested capital</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">81</field>
+            <field name="question_type">numerical_box</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question101"
+                model="survey.question">
+            <field name="title">Any significant change in the ownership,
+                capital structure, activities, volume of business, expected
+                during the current year?
+            </field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">101</field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question101_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question101"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question101_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question101"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question105"
+                model="survey.question">
+            <field name="title">Date of Birth of Director</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">105</field>
+            <field name="question_type">date</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question106"
+                model="survey.question">
+            <field name="title">Any ongoing litigation against the company or
+                directors?
+            </field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">106</field>
+            <field name="question_type">simple_choice</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question106_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question106"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question106_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question106"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question115"
+                model="survey.question">
+            <field name="title">
+                Internal Audit
+            </field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">115</field>
+            <field name="question_type">simple_choice</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question115_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question115"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question115_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question115"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question116"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">116</field>
+            <field name="title">Outsourced</field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question115"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question115_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question116_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question116"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question116_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question116"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question117"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">117</field>
+            <field name="title">Internal Audit frequency</field>
+            <field name="question_type">char_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question115"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question115_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question118"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">118</field>
+            <field name="title">Risk Management Function?</field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question118_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question118"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question118_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question118"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question119"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">119</field>
+            <field name="title">Risk Register?</field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question119_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question119"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question119_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question119"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question120"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">120</field>
+            <field name="title">ISO certified?</field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question120_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question120"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question120_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question120"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question121"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">121</field>
+            <field name="title">Policy Procedure Manuals (for e.g. Procurement,
+                Sales, Accounts, and Manual of Authority /Job description /
+                system for performance approval etc.)?
+            </field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question121_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question121"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question121_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question121"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question122"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">122</field>
+            <field name="title">Would our travel be required outside Muscat?
+            </field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question122_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question122"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question122_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question122"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question123"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">123</field>
+            <field name="title">Specify locations</field>
+            <field name="question_type">char_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question122"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question122_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question124"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">124</field>
+            <field name="title">Whether reports are required in Arabic also ?
+            </field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question124_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question124"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question124_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question124"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question125"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">125</field>
+            <field name="title">Quarterly Review required?
+            </field>
+            <field name="question_type">simple_choice</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question125_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question125"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question125_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question125"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question126"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">126</field>
+            <field name="title">Issue / Certify CMA returns ?
+            </field>
+            <field name="question_type">simple_choice</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question126_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question126"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question126_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question126"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question127"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">127</field>
+            <field name="title">For Group Companies
+            </field>
+            <field name="question_type">simple_choice</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question127_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question127"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question127_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question127"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question128"
+                model="survey.question">
+            <field name="title">
+                Details of Subsidiaries, if any:
+            </field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">128</field>
+            <field name="question_type">text_box</field>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question127"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question127_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question129"
+                model="survey.question">
+            <field name="title">
+                Details of Associates, if any:
+            </field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">129</field>
+            <field name="question_type">text_box</field>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question127"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question127_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question130"
+                model="survey.question">
+            <field name="title">
+                Are the accounts for each division/(activity) done separately
+                and then consolidated?
+            </field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">130</field>
+            <field name="question_type">simple_choice</field>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question127"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question127_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question130_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question130"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question130_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question130"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question131"
+                model="survey.question">
+            <field name="title">
+                Are there any other company/establishment whose accounts are
+                consolidated with your accounts?
+            </field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">131</field>
+            <field name="question_type">simple_choice</field>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question127"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question127_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question131_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question131"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question131_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question131"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question132"
+                model="survey.question">
+            <field name="title">
+                Kindly specify:
+            </field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">132</field>
+            <field name="question_type">text_box</field>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question131"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question131_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question133"
+                model="survey.question">
+            <field name="title">
+                Registered as a VAT group?
+            </field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">133</field>
+            <field name="question_type">simple_choice</field>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question127"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question127_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question133_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question133"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question133_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question133"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question_p8"
+                model="survey.question">
+            <field name="title">Referral</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">150</field>
+            <field name="question_type" eval="False"/>
+            <field name="is_page" eval="True"/>
+            <field name="description" type="html">
+                <p>Who referred you to Crowe Oman (Crowe Mak Ghazali LLC)?
+                </p>
+            </field>
+        </record>
+        <record id="crowe_questionnaire_survey_question150"
+                model="survey.question">
+            <field name="title">Name of person</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">150</field>
+            <field name="question_type">char_box</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question151"
+                model="survey.question">
+            <field name="title">Name of Company</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">151</field>
+            <field name="question_type">char_box</field>
+        </record>
+        <!--        last question-->
+        <record id="crowe_questionnaire_survey_question160"
+                model="survey.question">
+            <field name="title">Select Crowe Service Required</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">160</field>
+            <field name="question_type">multiple_choice</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question160_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="sequence">1</field>
+            <field name="value">EA</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question160_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="sequence">2</field>
+            <field name="value">IA</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question160_a3"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="sequence">3</field>
+            <field name="value">Feas</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question160_a4"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="sequence">4</field>
+            <field name="value">VAT</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question160_a5"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="sequence">5</field>
+            <field name="value">BV</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question160_a6"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="sequence">6</field>
+            <field name="value">PNW</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question160_a7"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="sequence">7</field>
+            <field name="value">Info</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question160_a8"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="sequence">8</field>
+            <field name="value">Tech</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question160_a9"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="sequence">9</field>
+            <field name="value">Other</field>
+        </record>
+        <!--        External Audit Category-->
+        <record id="crowe_questionnaire_survey_question_p10"
+                model="survey.question">
+            <field name="title">External Audit</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">162</field>
+            <field name="question_type" eval="False"/>
+            <field name="is_page" eval="True"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question163"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">163</field>
+            <field name="title">Value of fixed assets</field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question164"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">164</field>
+            <field name="title">Value of current assets</field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question165"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">165</field>
+            <field name="title">Value of intellectual property if any:</field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question166"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">166</field>
+            <field name="title">Value of intangible assets if any:</field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question167"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">167</field>
+            <field name="title">Does the company have a practice of carrying
+                out Interim audit?
+            </field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question167_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question167"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question167_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question167"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question168"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">168</field>
+            <field name="title">Turnover during the previous year</field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question169"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">169</field>
+            <field name="title">Estimated turnover during current year</field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question170"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">170</field>
+            <field name="title">Local turnover</field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question171"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">171</field>
+            <field name="title">Volume and amount of Exports</field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question172"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">172</field>
+            <field name="title">No. of bank accounts</field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question173"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">173</field>
+            <field name="title">Amount of loan and other facilities, if any:
+            </field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question174"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">174</field>
+            <field name="title">Do you come under the category of customers
+                under obligation to submit audited balance sheet within four
+                months of the year end?
+            </field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question174_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question174"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question174_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question174"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question175"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">175</field>
+            <field name="title">No. of payment vouchers in a year:</field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question176"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">176</field>
+            <field name="title">No. of invoices in a year</field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question177"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">177</field>
+            <field name="title">No. of cheques issued in a year</field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question178"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">178</field>
+            <field name="title">No. of Trade creditors</field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question179"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">179</field>
+            <field name="title">No. of Trade debtors</field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question180"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">180</field>
+            <field name="title">No. of Trade debtors</field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question181"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">181</field>
+            <field name="title">Amount of Government/ODB loans if any</field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a1"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question182"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">182</field>
+            <field name="title">No. of employees in the Accounts Department
+            </field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a1"/>
+        </record>
+        <!--        Income Tax-->
+        <record id="crowe_questionnaire_survey_question_p11"
+                model="survey.question">
+            <field name="title">Income Tax</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">189</field>
+            <field name="question_type" eval="False"/>
+            <field name="is_page" eval="True"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question190"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">190</field>
+            <field name="title">Tax year of last assessment</field>
+            <field name="question_type">date</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a2"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question191"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">191</field>
+            <field name="title">Year of latest tax return filed</field>
+            <field name="question_type">date</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a2"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question193"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">193</field>
+            <field name="title">Are there any carried forward loosses?</field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a2"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question193_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question193"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question193_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question193"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question194"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">194</field>
+            <field name="title">Any appeals pending with tax authorities
+            </field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a2"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question194_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question194"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question194_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question194"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <!--        INTERNAL AUDIT-->
+        <record id="crowe_questionnaire_survey_question_p12"
+                model="survey.question">
+            <field name="title">Internal Audit</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">200</field>
+            <field name="question_type" eval="False"/>
+            <field name="is_page" eval="True"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question201"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">201</field>
+            <field name="title">Audit Committee meeting frequency</field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a3"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question202"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">202</field>
+            <field name="title">No. Of members of the audit committee</field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a3"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question203"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">203</field>
+            <field name="title">No of Independent/Non-Independent Directors
+            </field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a3"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question204"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">204</field>
+            <field name="title">Number of Departments</field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a3"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question205"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">205</field>
+            <field name="title">Relevant department Head - Professional
+                qualifications and Experience
+            </field>
+            <field name="question_type">char_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a3"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question206"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">206</field>
+            <field name="title">Availability of Fixed asset register</field>
+            <field name="question_type">char_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a3"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question207"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">207</field>
+            <field name="title">Payroll process outsourced</field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a3"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question207_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question207"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question207_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question207"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question208"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">208</field>
+            <field name="title">Information system audit Frequency</field>
+            <field name="question_type">char_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a3"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question209"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">209</field>
+            <field name="title">Approved License for relevant business</field>
+            <field name="question_type">char_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a3"/>
+        </record>
+        <!--        Vat-->
+        <record id="crowe_questionnaire_survey_question_p13"
+                model="survey.question">
+            <field name="title">Value Added Tax ( VAT )</field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">219</field>
+            <field name="question_type" eval="False"/>
+            <field name="is_page" eval="True"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question220"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">220</field>
+            <field name="title">Number of branches, with locations of the
+                branches
+            </field>
+            <field name="question_type">text_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question222"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">222</field>
+            <field name="title">Turnover during the previous year</field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question223"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">223</field>
+            <field name="title">Projected turnover during current year</field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question224"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">224</field>
+            <field name="title">No. of purchase invoices in a year</field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question225"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">225</field>
+            <field name="title">No. of sales invoices in a year</field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question226"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">226</field>
+            <field name="title">Volume of exports (to outside GCC). Which
+                countries company exports?
+            </field>
+            <field name="question_type">text_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question227"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">227</field>
+            <field name="title">Volume of imports (from outside GCC). Which
+                countries company imports?
+            </field>
+            <field name="question_type">text_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question228"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">228</field>
+            <field name="title">Volume of Sales to other GCC countries</field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question229"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">229</field>
+            <field name="title">Volume of purchases form other GCC countries
+            </field>
+            <field name="question_type">numerical_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question230"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">229</field>
+            <field name="title">If entity is part of the group please provide
+                details of Shareholding/controlling interest details with group
+                entity nature of business.
+            </field>
+            <field name="question_type">text_box</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question231"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">231</field>
+            <field name="title">Can IT system be upgraded for VAT
+                implementation?
+            </field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question231_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question231"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question231_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question231"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <!--        vat first branch section-->
+        <record id="crowe_questionnaire_survey_question_p13_s1"
+                model="survey.question">
+            <field name="title">Customer base. Sales to (Please mark all that
+                apply)
+            </field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">236</field>
+            <field name="question_type" eval="False"/>
+            <field name="is_page" eval="True"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question232"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">237</field>
+            <field name="title">a. Oman</field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question232_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question232"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question232_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question232"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question233"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">238</field>
+            <field name="title">b. Other GCC</field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question233_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question233"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question233_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question233"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question234"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">239</field>
+            <field name="title">c. Outside GCC</field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question234_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question234"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question234_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question234"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question235"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">240</field>
+            <field name="title">d. Free Zone
+            </field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question235_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question235"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question235_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question235"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question236"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">241</field>
+            <field name="title">e. Government
+            </field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question236_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question236"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question236_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question236"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question237"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">242</field>
+            <field name="title">f. Healthcare
+            </field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question237_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question237"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question237_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question237"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question238"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">243</field>
+            <field name="title">g. Financial institutions
+            </field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question238_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question238"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question238_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question238"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question239"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">244</field>
+            <field name="title">g. Financial institutions
+            </field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question239_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question239"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question239_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question239"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question240"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">245</field>
+            <field name="title">h. Related parties
+            </field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question240_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question240"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question240_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question240"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <!--        vat second branch section-->
+        <record id="crowe_questionnaire_survey_question_p13_s2"
+                model="survey.question">
+            <field name="title">Procurement/vendors (Please mark all that
+                apply)
+            </field>
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">255</field>
+            <field name="question_type" eval="False"/>
+            <field name="is_page" eval="True"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question246"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">256</field>
+            <field name="title">a. Oman
+            </field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question246_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question246"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question246_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question246"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question247"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">257</field>
+            <field name="title">b. Other GCC
+            </field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question247_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question247"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question247_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question247"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question248"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">258</field>
+            <field name="title">b. Outside GCC
+            </field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question248_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question248"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question248_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question248"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question249"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">259</field>
+            <field name="title">c. Free Zone</field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question249_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question249"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question249_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question249"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question250"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">260</field>
+            <field name="title">d. Government</field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question250_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question250"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question250_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question250"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question251"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">261</field>
+            <field name="title">e. Financial institutions</field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question251_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question251"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question251_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question251"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question252"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">262</field>
+            <field name="title">f. Related parties</field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question252_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question252"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question252_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question252"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question253"
+                model="survey.question">
+            <field name="survey_id" ref="crowe_questionnaire_survey"/>
+            <field name="sequence">263</field>
+            <field name="title">g. Outsource arrangements</field>
+            <field name="question_type">simple_choice</field>
+            <field name="constr_mandatory" eval="True"/>
+            <field name="is_conditional" eval="True"/>
+            <field name="triggering_question_id"
+                   ref="crowe_questionnaire_survey_question160"/>
+            <field name="triggering_answer_id"
+                   ref="crowe_questionnaire_survey_question160_a4"/>
+        </record>
+        <record id="crowe_questionnaire_survey_question253_a1"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question253"/>
+            <field name="sequence">1</field>
+            <field name="value">Yes</field>
+        </record>
+        <record id="crowe_questionnaire_survey_question253_a2"
+                model="survey.question.answer">
+            <field name="question_id"
+                   ref="crowe_questionnaire_survey_question253"/>
+            <field name="sequence">2</field>
+            <field name="value">No</field>
+        </record>
+        <!--        444444444444444444444-->
+        <!--        Cost sheet sequence number-->
+        <record id="seq_cost_sheet" model="ir.sequence">
+            <field name="name">Cost Sheet</field>
+            <field name="code">cost.sheet</field>
+            <field name="prefix">CS</field>
+            <field name="suffix">/%(year)s</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

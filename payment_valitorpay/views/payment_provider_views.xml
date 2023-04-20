@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="payment_provider_form" model="ir.ui.view">
+        <field name="name">Valitor Provider Form</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_form"/>
+        <field name="arch" type="xml">
+            <group name="provider_credentials" position='inside'>
+                <group attrs="{'invisible': [('code', '!=', 'valitorpay')]}">
+                    <group>
+                        <field name="merchant_id" password="True"
+                               attrs="{'required':[('code', '=', 'valitorpay'), ('state', '!=', 'disabled')]}"/>
+                        <field name="verification_code" password="True"
+                               attrs="{'required':[('code', '=', 'valitorpay'), ('state', '!=', 'disabled')]}"/>
+                    </group>
+                </group>
+            </group>
+        </field>
+    </record>
+</odoo>

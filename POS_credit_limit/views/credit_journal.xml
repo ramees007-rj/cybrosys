@@ -1,0 +1,12 @@
+<odoo>
+    <record id="inherit_credit_check_journal" model="ir.ui.view">
+        <field name="name">inherit.credit.check.journal</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='type']" position="after">
+                <field name="credit_check"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,42 @@
+<odoo>
+    <record id="project_report_wizard_crowe" model="ir.ui.view">
+        <field name="name">project_report_wizard_crowe</field>
+        <field name="model">project.crowe.report</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="from_date"/>
+                            <field name="to_date"/>
+                        </group>
+                        <group>
+                            <field name="customer_id"/>
+                            <field name="user_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="project_ids" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_print_report" string="Print"
+                            type="object"/>
+                    <button special="cancel" string="Discard"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="project_report_wizard" model="ir.actions.act_window">
+        <field name="name">Project Report</field>
+        <field name="res_model">project.crowe.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem id="project_report_menu"
+              name="Project Analysis"
+              parent="project.menu_project_report"
+              action="project_report_wizard"
+              sequence="2"
+    />
+</odoo>

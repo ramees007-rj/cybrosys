@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="main_mailer_cloud"
+                  name="Mailer Cloud Connector"
+        />
+        <record id="campaign_regular_tree" model="ir.ui.view">
+            <field name="name">campaign.regular.tree</field>
+            <field name="model">mailer.cloud.campaign</field>
+            <field name="arch" type="xml">
+                <tree sample="1" class="o_mass_mailing_mailing_tree">
+                    <field name="modified_date" widget="datetime"/>
+                    <field name="subject"/>
+                    <field name="name"/>
+                    <field name="send" sum="Total"/>
+                    <field name="delivered_percentage"
+                           class="d-flex align-items-center ps-0 ps-lg-5"
+                           widget="progressbar" string="Delivered (%)"
+                           avg="Average"
+                    />
+                    <field name="open_percentage"
+                           class="d-flex align-items-center ps-0 ps-lg-5"
+                           widget="progressbar" string="Opened (%)"
+                           avg="Average"/>
+                    <field name="clicks_percentage"
+                           class="d-flex align-items-center ps-0 ps-lg-5"
+                           widget="progressbar" string="Clicked (%)"
+                           avg="Average"/>
+                    <field name="state"
+                           decoration-info="state in ['draft', 'schedule']"
+                           decoration-success="state == 'processing' or state == 'finished'"
+                           widget="badge"/>
+                </tree>
+            </field>
+        </record>
+        <record id="campaign_regular_form" model="ir.ui.view">
+            <field name="name">campaign.regular.form</field>
+            <field name="model">mailer.cloud.campaign</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header style="min-height:31px;">
+                        <button name="action_schedule" type="object"
+                                string="SCHEDULE" class="oe_highlight"
+                                states="draft"/>
+                        <button name="action_test_mail" type="object"
+                                string="TEST" class="btn-secondary"
+                                states="draft,schedule"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,schedule,processing,paused,finished,aborted,failed"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name" widget="char_emojis"
+                                   class="text-break" required="True"/>
+                        </group>
+                        <div>
+                            <group>
+                                <group>
+                                    <field name="subject" widget="char_emojis"
+                                           class="text-break" required="True"/>
+                                </group>
+                                <group>
+                                    <field name="list_ids"
+                                           domain="[('contact_count', '&gt;', 0)]"
+                                           required="True"
+                                           widget="many2many_tags"
+                                           string="Select mailing lists:"
+                                    />
+                                </group>
+                            </group>
+                        </div>
+                        <notebook>
+                            <page string="Mail Body" name="mail_body">
+                                <field name="body_arch" class="o_mail_body"
+                                       widget="mass_mailing_html"
+                                        options="{
+                                                'snippets': 'mass_mailing.email_designer_snippets',
+                                                'cssEdit': 'mass_mailing.iframe_css_assets_edit',
+                                                'inline-field': 'body_html',
+                                                'dynamic_placeholder': true,
+                                                }"
+                                       attrs="{'readonly': [('state','in',('processing','finished'))]}"
+                                       required="True"/>
+                                <field name="mailing_model_id"  invisible="1"/>
+
+<!--                                <button name="action_load_template" string="load" type="object"/>-->
+                            </page>
+                            <page string="Settings" name="settings">
+                                <group name="email_content"
+                                       string="Email Content">
+                                    <field name="sender_email"
+                                           required="True"/>
+                                    <field name="sender_name" required="True"/>
+                                    <field name="reply_email"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="campaign_regular_kanban">
+            <field name="name">campaign.regular.kanban</field>
+            <field name="model">mailer.cloud.campaign</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="state" quick_create="false"
+                        sample="1">
+                    <field name="state" readonly="1"/>
+                    <field name="id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_content"
+                                 t-attf-class="oe_kanban_global_click"
+                                 t-att-data-id="record.id.value">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <div class="row">
+                                            <h3 class="my-1 col-8 o_text_overflow">
+                                                <field name="subject"/>
+                                                <field name="delivered_percentage"/>
+                                            </h3>
+                                            <div class="progress border col-3 px-0 mt-2"
+                                                 style="background-color: inherit; height:12px;">
+                                                <div class="progress-bar"
+                                                     role="progressbar"
+                                                     aria-valuemin="0"
+                                                     t-attf-style="width: #{record.delivered_percentage.raw_value}%"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <div class="d-flex justify-content-between">
+                                        <div name="stat_send">
+                                            <b><field name="sent_percentage"/>%
+                                            </b>
+                                            Send
+                                        </div>
+                                        <div name="stat_replied">
+                                            <b><field name="open_percentage"/>%
+                                            </b>
+                                            Opened
+                                        </div>
+                                        <div name="stat_clicks">
+                                            <b><field
+                                                    name="clicks_percentage"/>%
+                                            </b>
+                                            Clicks
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <span class="fa fa-calendar-check-o me-2 small my-auto"
+                                          aria-label="Sent date"/>
+                                    <span class="align-self-baseline">
+                                        <field name="modified_date"
+                                               widget="date"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="mailer_cloud_view_calendar" model="ir.ui.view">
+            <field name="name">mailer.cloud.view.calendar</field>
+            <field name="model">mailer.cloud.campaign</field>
+            <field name="arch" type="xml">
+                <calendar date_start="modified_date" string="Mailings"
+                          hide_time="true" mode="month" color="state"
+                          quick_add="False">
+                    <!--                    <field name="mailing_model_id" string="Recipient"-->
+                    <!--                           options="{'no_open': True}"/>-->
+                    <!--                    <field name="user_id" filters="1" invisible="1"/>-->
+                    <!--                    <field name="state" filters="1" invisible="1"/>-->
+                </calendar>
+            </field>
+        </record>
+        <record id="campaign_regular_action" model="ir.actions.act_window">
+            <field name="name">Regular Campaign</field>
+            <field name="res_model">mailer.cloud.campaign</field>
+            <field name="view_mode">tree,kanban,calendar,form</field>
+        </record>
+        <menuitem id="main_mailer_cloud_campaigns"
+                  name="Campaigns"
+                  parent="main_mailer_cloud"
+                  sequence="1"
+        />
+        <menuitem id="main_mailer_cloud_audience_regular"
+                  name="Regular"
+                  parent="main_mailer_cloud_campaigns"
+                  action="campaign_regular_action"
+                  sequence="1"
+        />
+        <record id="campaign_schedule_date_action"
+                model="ir.actions.act_window">
+            <field name="name">When do you want to send your campaign?</field>
+            <field name="res_model">mailer.cloud.schedule.campaign</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        <record id="mailer_cloud_schedule_date_view_form"
+                model="ir.ui.view">
+            <field name="name">mailer.cloud.schedule.date.view.form</field>
+            <field name="model">mailer.cloud.schedule.campaign</field>
+            <field name="arch" type="xml">
+                <form string="Take Future Schedule Date">
+                    <group>
+                        <group>
+                            <field name="schedule_date" string="Send on"
+                                   required="1"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Schedule" name="action_schedule_date"
+                                type="object" class="btn-primary"/>
+                        <button string="Discard " class="btn-secondary"
+                                special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="campaign_test_mail_date_action"
+                model="ir.actions.act_window">
+            <field name="name">Email</field>
+            <field name="res_model">mailer.cloud.test.mail</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        <record id="mailer_cloud_test_mail_view_form"
+                model="ir.ui.view">
+            <field name="name">mailer.cloud.schedule.date.view.form</field>
+            <field name="model">mailer.cloud.test.mail</field>
+            <field name="arch" type="xml">
+                <form string="Take Future Schedule Date">
+                    <group>
+                        <group>
+                            <field name="email" string="Email"
+                                   required="1"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Send" name="action_send_mail"
+                                type="object" class="btn-primary"/>
+                        <button string="Discard " class="btn-secondary"
+                                special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="campaign_automation_action"
+                model="ir.actions.act_window">
+            <field name="name">Campaign Automations</field>
+            <field name="res_model">campaign.automation</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="automation_mailer_cloud_campaigns"
+                  name="Automations"
+                  parent="main_mailer_cloud_campaigns"
+                  action="campaign_automation_action"
+                  sequence="2"
+        />
+    </data>
+</odoo>

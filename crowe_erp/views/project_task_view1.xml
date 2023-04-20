@@ -1,0 +1,356 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="project_task_vieaction_reviewer_checkw_form_inherit_crowe"
+            model="ir.ui.view">
+        <field name="name">project.task.form.inherit.crowe</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_assign_to_me'][2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_assign_to_me'][1]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='milestone_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='milestone_id']" position="after">
+                <field name="auditor_id"/>
+                <!--                <field name="state"/>-->
+                <field name="task_flow_type" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="before">
+                <field name="project_director_id"/>
+            </xpath>
+            <xpath expr="//span[@id='start_rating_buttons']" position="before">
+                <button class="oe_stat_button"
+                        type="object" name="action_view_wo"
+                        icon="fa-pencil-square-o"
+                        string="Work Order"/>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <field name="state" invisible="1"/>
+                <button name="action_allocate" type="object" string="allocate"
+                        class="btn btn-primary" states="new"/>
+                <button name="action_start_field_work" type="object"
+                        string="Start Field Work" class="btn btn-primary"
+                        attrs="{'invisible': [('state','!=','wo_completed')]}"/>
+                <button name="action_complete_field_work" type="object"
+                        string="Complete Field Work" class="btn btn-primary"
+                        attrs="{'invisible': [('state','!=','field_work_started')]}"/>
+                <button name="action_start_supervisor_check" type="object"
+                        string="Start Supervisor Check" class="btn btn-primary"
+                        attrs="{'invisible': [('state','!=','field_work_completed')]}"/>
+                <button name="action_start_reviewer_check" type="object"
+                        string="Start Reviewer Check" class="btn btn-primary"
+                        attrs="{'invisible': [('state','!=','supervisor_sign_off')]}"/>
+                <button name="action_engagement_partner"
+                        string="Engagement Partner" type="object"
+                        class="btn-primary"
+                        attrs="{'invisible': [('state','!=','reviewer_sign_off')]}"/>
+                <button name="action_draft_issue" type="object"
+                        groups="account.group_account_readonly,account.group_account_invoice"
+                        string="Draft Issued By"
+                        class="btn-primary"
+                        attrs="{'invisible': [('state','!=','engagement_partner')]}"/>
+                <button name="action_deliver_report" type="object"
+                        string="Deliver Draft Report"
+                        class="btn-primary"
+                        attrs="{'invisible': [('state','!=','preliminary_clearance')]}"/>
+                <button name="action_final_clearance" string="Final Clearance"
+                        type="object"
+                        class="btn-primary"
+                        attrs="{'invisible': [('state','!=','draft_report_delivered')]}"/>
+                <button name="action_engagement_partner_signed_off"
+                        type="object" string="Engagement partner signed off"
+                        class="btn-primary"
+                        attrs="{'invisible': [('state','!=','final_clearance')]}"/>
+                <button name="action_final_report"
+                        string="Deliver Final Report" type="object"
+                        class="btn-primary"
+                        attrs="{'invisible': [('state','!=','audit_partner_sign_off')]}"/>
+                <button name="action_complete_task" type="object"
+                        string="Complete"
+                        class="btn-primary"
+                        attrs="{'invisible': [('state','!=','deliver_final_report')]}"/>
+                <button name="action_set_to_complete" type="object" string="Set to Complete"
+                        attrs="{'invisible': [('state','=','complete')]}"/>
+            </xpath>
+            <xpath expr="//field[@name='task_properties']" position="before">
+                <hr/>
+                <group attrs="{'invisible':['|',('task_flow_type','=','short'),('task_flow_type','=','medium')]}">
+                    <group attrs="{'required':[('state', '=', 'field_work_completed')],'invisible':[('state','in',('field_work_started','wo_completed','allocated','new'))]}">
+                        <field name="supervisor_id" string="Supervisor"
+                               options="{'no_create': True, 'no_create_edit':True}"
+                               attrs="{'readonly': [('state','!=','field_work_completed')],'required':[('state', '=', 'field_work_completed')]}"/>
+                    </group>
+                    <group attrs="{'required':[('state', '=', 'field_work_completed')],'invisible':[('state','in',('field_work_started','wo_completed','allocated','new'))]}">
+                        <field name="case_ware_check"
+                               attrs="{'readonly': [('state','!=','field_work_completed')]}"/>
+                    </group>
+                </group>
+                <group attrs="{'invisible':['|',('task_flow_type','in',['short','medium']),('state','in',('new','wo_completed','allocated','field_work_started','field_work_completed'))]}"
+                       string="Manager Review">
+                    <group attrs="{'invisible':['|',('state','in',('new','wo_completed','allocated','field_work_started','field_work_completed')),('task_flow_type','=','medium')]}">
+                        <field name="reviewed_id"
+                               string="Manager"
+                               options="{'no_create': True, 'no_create_edit':True}"
+                               attrs="{'required':[('state', '=', 'supervisor_sign_off')],'readonly': [('state','!=','supervisor_sign_off')]}"
+                        />
+                    </group>
+                    <group attrs="{'invisible':['|',('state','in',('new','allocated','wo_completed','field_work_started','field_work_completed')),('task_flow_type','=','medium')]}">
+                        <field name="comment_id"
+                               options="{'no_create': True, 'no_create_edit':True}"
+                               attrs="{'required':[('state', '=', 'supervisor_sign_off')],'readonly': [('state','!=','supervisor_sign_off')]}"
+                        />
+                    </group>
+                </group>
+                <group string="Engagement Partner Review"
+                       attrs="{'invisible':['|',('state','in',('new','allocated','wo_completed','field_work_started','field_work_completed','supervisor_sign_off')),('task_flow_type','=','short')]}">
+                    <group>
+                        <field name="engagement_partner_id"
+                               options="{'no_create': True, 'no_create_edit':True}"
+                               attrs="{'required':[('state', '=', 'reviewer_sign_off')],'readonly': [('state','!=','reviewer_sign_off')]}"/>
+                        <field name="has_need_quality_check"
+                               attrs="{'readonly': [('state','not in',['reviewer_sign_off'])]}"/>
+                    </group>
+                    <group>
+                        <field name="engagement_comments_id"
+                               options="{'no_create': True, 'no_create_edit':True}"
+                               attrs="{'required':[('state', '=', 'reviewer_sign_off')],'readonly': [('state','!=','reviewer_sign_off')]}"/>
+                        <field name="quality_reviewer_id"
+                               attrs="{'readonly': [('state','not in',['reviewer_sign_off'])],'invisible': [('has_need_quality_check','=',False)],'required': [('has_need_quality_check','=',True)]}"
+                               options="{'no_create': True, 'no_create_edit':True}"/>
+                    </group>
+                </group>
+                <group>
+                    <group string="Preliminary clearance"
+                           attrs="{'required':[('state', '=', 'engagement_partner')],'invisible':[('state','in',('field_work_completed','allocated','field_work_started','wo_completed','new','field_work_completed','supervisor_sign_off','reviewer_sign_off'))]}">
+                        <field name="letter_of_rep_check"
+                               attrs="{'required':[('state', '=', 'engagement_partner')],'readonly': [('state','not in',['engagement_partner'])],'invisible':[('task_flow_type','=','short')]}"/>
+                        <field name="letter_of_engagement_next_year_check"
+                               attrs="{'required':[('state', '=', 'engagement_partner')],'readonly': [('state','not in',['engagement_partner'])],'invisible':[('task_flow_type','=','short')]}"/>
+                        <field name="draft_deliverables_check"
+                               attrs="{'required':[('state', '=', 'engagement_partner')],'readonly': [('state','not in',['engagement_partner'])]}"/>
+                        <field name="management_letter_check"
+                               attrs="{'required':[('state', '=', 'engagement_partner')],'readonly': [('state','not in',['engagement_partner'])],'invisible':[('task_flow_type','=','short')]}"/>
+                        <field name="draft_check_user_id"
+                               attrs="{'required':['&amp;',('state', '=', 'engagement_partner'),('task_flow_type','!=','short')],'readonly': [('state','not in',['engagement_partner'])],'invisible':[('task_flow_type','=','short')]}"
+                               options="{'no_create': True, 'no_create_edit':True}"/>
+                        <field name="draft_compared_user_id"
+                               attrs="{'required':['&amp;',('state', '=', 'engagement_partner'),('task_flow_type','!=','short')],'readonly': [('state','not in',['engagement_partner'])],'invisible':[('task_flow_type','=','short')]}"
+                               options="{'no_create': True, 'no_create_edit':True}"/>
+                        <field name="draft_checked_user_id"
+                               options="{'no_create': True, 'no_create_edit':True}"
+                               attrs="{'required':['&amp;',('state', '=', 'engagement_partner'),('task_flow_type','!=','short')],'readonly': [('state','not in',['engagement_partner'])],'invisible':[('task_flow_type','=','short')]}"/>
+                        <field name="open_items_req"
+                               attrs="{'readonly': [('state','not in',['engagement_partner'])],'invisible':[('task_flow_type','=','short')]}"/>
+                    </group>
+                    <group string="Final Clearance"
+                           attrs="{'required':[('state', '=', 'draft_report_delivered')],'invisible':['|',('state', 'in', ('new','preliminary_clearance','allocated','allocated','wo_completed','field_work_started','field_work_completed','supervisor_sign_off',
+                           'reviewer_sign_off','engagement_partner','engagement_partner')),('task_flow_type','in',['medium','short'])]}">
+                        <field name="letter_of_rep_check_head"
+                               attrs="{'readonly': [('state','!=','draft_report_delivered')]}"/>
+                        <field name="draft_duly_check"
+                               attrs="{'readonly': [('state','!=','draft_report_delivered')]}"/>
+                        <field name="eng_letter_check"
+                               attrs="{'readonly': [('state','!=','draft_report_delivered')]}"/>
+                        <field name="final_tbalance_check"
+                               attrs="{'readonly': [('state','!=','draft_report_delivered')]}"/>
+                        <field name="pending_check"
+                               attrs="{'readonly': [('state','!=','draft_report_delivered')]}"/>
+                        <field name="compared_agreed_check"
+                               attrs="{'readonly': [('state','!=','draft_report_delivered')]}"/>
+                        <field name="checked_id"
+                               options="{'no_create': True, 'no_create_edit':True}"
+                               attrs="{'readonly': [('state','!=','draft_report_delivered')]}"/>
+                        <field name="checked_date"
+                               attrs="{'readonly': [('state','!=','draft_report_delivered')]}"/>
+                        <field name="issued_by"
+                               options="{'no_create': True, 'no_create_edit':True}"
+                               attrs="{'readonly': [('state','!=','draft_report_delivered')]}"/>
+                        <field name="issued_by_date"
+                               attrs="{'readonly': [('state','!=','draft_report_delivered')]}"/>
+                    </group>
+                </group>
+                <!--                    <span attrs="{'invisible':[('state','not in',['draft_report_delivered','final_clearance','audit_partner_sign_off','deliver_final_report','complete'])]}"-->
+                <!--                          style="color:green;font-size:17px;font-weight: bold;">-->
+                <!--                        Draft Report Delivered-->
+                <!--                    </span>-->
+                <group>
+                    <group string="Engagement Partner Sign Off"
+                           attrs="{'required':[('state', '=', 'final_clearance')],'invisible':['|',('state', 'not in', ('final_clearance','audit_partner_sign_off','deliver_final_report','complete')),('task_flow_type','=','short')]}">
+                        <field name="final_clearance_aud_partner_id"
+                               attrs="{'readonly': [('state','!=','final_clearance')],'required':[('state','=','final_clearance')]}"
+                               options="{'no_create': True, 'no_create_edit':True}"/>
+                    </group>
+                    <group attrs="{'invisible':[('task_flow_type','=','short')]}">
+                        <group string="Meeting"
+                               attrs="{'required':[('state', '=', 'manager_partner_sign_off')],'invisible':[('state','not in',('deliver_final_report','complete'))]}">
+                            <field name="meeting_type"
+                                   attrs="{'readonly': [('state','=','complete')]}"
+                                   required="1"/>
+                            <field name="meeting_date"
+                                   attrs="{'readonly': [('state','=','complete')],'invisible': [('meeting_type','=','none')],'required': [('meeting_type','!=','none')]}"/>
+                        </group>
+                    </group>
+                </group>
+            </xpath>
+            <page name="extra_info" position="attributes">
+                <attribute name="groups"></attribute>
+            </page>
+            <xpath expr="//page[@name='extra_info']//group" position="after">
+                <hr/>
+                <div name="report_control_sheet" style="color:black;">
+                    <div class="row">
+                        <label for="allocated_user_id" class="col"/>
+                        <div class="col">
+                            <field name="allocated_user_id"/>
+                            <field name="allocated_time"
+                                   class="o_setting_right_pane"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="wo_approved_user_id" class="col"/>
+                        <div class="col">
+                            <field name="wo_approved_user_id"/>
+                            <field name="Wo_approved_time"
+                                   class="o_setting_right_pane"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="field_work_started_user_id" class="col"/>
+                        <div class="col">
+                            <field name="field_work_started_user_id"/>
+                            <field name="field_work_started_time"
+                                   class="o_setting_right_pane"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="field_work_complete_user_id" class="col"/>
+                        <div class="col">
+                            <field name="field_work_complete_user_id"/>
+                            <field name="fo_completed_time"
+                                   class="o_setting_right_pane"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="supervisor_user_id" class="col"/>
+                        <div class="col">
+                            <field name="supervisor_user_id"/>
+                            <field name="supervisor_time"
+                                   class="o_setting_right_pane"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="manager_review_user_id" class="col"/>
+                        <div class="col">
+                            <field name="manager_review_user_id"/>
+                            <field name="manager_date"
+                                   class="o_setting_right_pane"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="ep_review_user_id" class="col"/>
+                        <div class="col">
+                            <field name="ep_review_user_id"/>
+                            <field name="ep_review_time"
+                                   class="o_setting_right_pane"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="preliminary_clearance_user_id"
+                               class="col"/>
+                        <div class="col">
+                            <field name="preliminary_clearance_user_id"/>
+                            <field name="preliminary_clearance_time"
+                                   class="o_setting_right_pane"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="draft_dele_user_id" class="col"/>
+                        <div class="col">
+                            <field name="draft_dele_user_id"/>
+                            <field name="draft_dele_time"
+                                   class="o_setting_right_pane"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="final_clearance_user_id" class="col"/>
+                        <div class="col">
+                            <field name="final_clearance_user_id"/>
+                            <field name="final_clearance_time"
+                                   class="o_setting_right_pane"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="ep_sign_off_user_id" class="col"/>
+                        <div class="col">
+                            <field name="ep_sign_off_user_id"/>
+                            <field name="ep_sign_off_time"
+                                   class="o_setting_right_pane"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="final_delivered_user_id" class="col"/>
+                        <div class="col">
+                            <field name="final_delivered_user_id"/>
+                            <field name="final_delivered_time"
+                                   class="o_setting_right_pane"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="complete_user_id" class="col"/>
+                        <div class="col">
+                            <field name="complete_user_id"/>
+                            <field name="complete_time"
+                                   class="o_setting_right_pane"/>
+                        </div>
+                    </div>
+                </div>
+                <div name="print_button">
+                    <button name="action_print_rcs" type="object"
+                            string="print" class="btn btn-primary"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_sale_project_inherit_form-inherit" model="ir.ui.view">
+        <field name="name">view.sale.project.inherit.form.inherit</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="sale_project.view_sale_project_inherit_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sale_line_id'][1]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='sale_line_id'][2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="project.project_task_kanban_action_view"
+            model="ir.actions.act_window.view">
+        <field name="sequence" eval="20"/>
+    </record>
+    <record id="project.act_project_project_2_project_task_all" model="ir.actions.act_window">
+        <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+    </record>
+    <record id="project.project_task_tree_action_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="10"/>
+    </record>
+    <record id="project.project_task_tree_action_view"
+            model="ir.actions.act_window.view">
+        <field name="sequence" eval="10"/>
+    </record>
+    <record id="task_tree_view" model="ir.ui.view">
+        <field name="name">task_tree_view</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_tree2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='stage_id']" position="replace">
+                <field name="state"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

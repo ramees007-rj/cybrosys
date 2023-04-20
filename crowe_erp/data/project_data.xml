@@ -1,0 +1,10 @@
+<odoo>
+<!--    sequence number for project-->
+    <record id="ir_sequence_project" model="ir.sequence">
+        <field name="name">Project</field>
+        <field name="code">project.crowe.sequence</field>
+        <field name="prefix">A</field>
+        <field name="padding">4</field>
+        <field name="suffix">/%(year)s/</field>
+    </record>
+</odoo>

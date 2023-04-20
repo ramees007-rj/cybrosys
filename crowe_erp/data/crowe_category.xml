@@ -1,0 +1,15 @@
+<odoo>
+    <data noupdate="1">
+        <record id="product_category_task_type" model="product.category">
+            <field name="name">Work Flow Main</field>
+        </record>
+        <record id="product_category_task_type_short" model="product.category">
+            <field name="parent_id" ref="product_category_task_type"/>
+            <field name="name">Short</field>
+        </record>
+        <record id="product_category_task_type_medium" model="product.category">
+            <field name="parent_id" ref="product_category_task_type"/>
+            <field name="name">Medium</field>
+        </record>
+    </data>
+</odoo>

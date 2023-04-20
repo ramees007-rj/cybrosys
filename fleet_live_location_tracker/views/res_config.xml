@@ -1,0 +1,38 @@
+<odoo>
+    <record id="view_fleet_map_settings_form_inherited" model="ir.ui.view">
+        <field name="name">res.config.settings.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="fleet.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='end_contract_setting']" position="after">
+                <div class="row mt16 o_settings_container">
+                    <div class="content-group mt16">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <label for="google_map_api"/><br/>
+                                <field name="google_map_api"/>
+                                <div class="text-muted">
+                                    Show the live location of a vehicle
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-group mt16">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <label for="traccar_server_url"/><br/>
+                                <field name="traccar_server_url"/><br/>
+                                <label for="traccar_email"/><br/>
+                                <field name="traccar_email"/><br/>
+                                <label for="traccar_password"/><br/>
+                                <field name="traccar_password"/><br/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

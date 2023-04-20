@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+        <record model="ir.module.category" id="mailer_cloud_connector">
+            <field name="name">Mailer Cloud Connector</field>
+            <field name="description">User access rights
+            </field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="mailer_cloud_connector_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="mailer_cloud_connector"/>
+        </record>
+    </data>
+</odoo>

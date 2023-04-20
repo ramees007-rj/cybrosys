@@ -1,0 +1,82 @@
+<odoo>
+    <record id="hr_contract_form_additional_allowance_inherit" model="ir.ui.view">
+        <field name="name">contract.inherit.form</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_payroll_community.hr_contract_form_additional_allowance"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='allowances']" position="replace"/>
+        </field>
+    </record>
+    <record id="hr_contract_form_additional_allowance_inherit2" model="ir.ui.view">
+        <field name="name">contract.inherit.form</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='salary_info']" position="replace">
+                <group name="salary">
+                    <label for="wage"/>
+                    <div class="o_row" name="wage">
+                        <field name="wage" class="oe_inline" nolabel="1"/>
+                        <div>/ month</div>
+                    </div>
+                </group>
+                <group>
+                    <group string="Monthly Advantages in Cash" name='allowances'>
+                        <label for="hra"/>
+                        <div class="o_row">
+                            <field name="hra" nolabel="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="mobile_allowance"/>
+                        <div class="o_row">
+                            <field name="mobile_allowance" nolabel="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="outstation_allowance"/>
+                        <div class="o_row">
+                            <field name="outstation_allowance" nolabel="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="incentives"/>
+                        <div class="o_row">
+                            <field name="incentives" nolabel="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="managerial_remuneration"/>
+                        <div class="o_row">
+                            <field name="managerial_remuneration" nolabel="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="conveyance_allowance"/>
+                        <div class="o_row">
+                            <field name="conveyance_allowance" nolabel="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="car_allowance"/>
+                        <div class="o_row">
+                            <field name="car_allowance" nolabel="1"/>
+                            <span>/ month</span>
+                        </div>
+                    </group>
+                    <group string="Monthly Deductions in Cash" name='deductions'>
+                        <label for="salary_advance"/>
+                        <div class="o_row">
+                            <field name="salary_advance" nolabel="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="social_insurance"/>
+                        <div class="o_row">
+                            <field name="social_insurance" nolabel="1"/>
+                            <span>/ month</span>
+                        </div>
+                        <label for="fine"/>
+                        <div class="o_row">
+                            <field name="fine" nolabel="1"/>
+                            <span>/ month</span>
+                        </div>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

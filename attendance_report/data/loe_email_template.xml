@@ -1,0 +1,24 @@
+<odoo>
+    <data>
+        <record id="" model="mail.template">
+            <field name="name">LOE</field>
+            <field name="model_id" ref="college_erp.model_admission"/>
+            <field name="email_from">"{{ object.company_id.name }}" &lt;{{ (object.company_id.email or user.email) }}&gt;</field>
+            <field name="email_to">{{ object.partner_ids.email }}</field>
+            <field name="subject">Letter Of Engagement</field>
+            <field name="body_html" type="html">
+                <div>
+                    <p>
+                        Dear,
+                        <t t-out="object.first_name"/>
+                        <br/>
+                        You got admission in college.
+                        <br/>
+                        Admission NO:
+                        <t t-out="object.admission_no"/>
+                    </p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

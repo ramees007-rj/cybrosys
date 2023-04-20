@@ -1,0 +1,21 @@
+<odoo>
+        <record id="vehicle_fleet_inherited" model="ir.ui.view">
+            <field name="name">fleet.vehicle.inherited.view.form</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+            <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="get_live_location" type="object" class="oe_stat_button"
+                        icon="fa-code-fork"
+                        help="show the current location of the vehicle"
+                        attrs="{'invisible': [ ('location_tracking', '=', False)]}">
+                    Live Location
+                </button>
+            </xpath>
+                <xpath expr="//field[@name='location']" position="after">
+                    <field name="location_tracking"/>
+                    <field name="traccar_id"/>
+                </xpath>
+        </field>
+    </record>
+</odoo>

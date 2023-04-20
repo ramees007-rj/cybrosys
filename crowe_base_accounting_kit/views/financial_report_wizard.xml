@@ -1,0 +1,31 @@
+<odoo>
+    <record id="financial_report_wiz_modified_inherit" model="ir.ui.view">
+        <field name="name">financial.report.wiz.modified.inherit</field>
+        <field name="model">financial.report</field>
+        <field name="inherit_id"
+               ref="base_accounting_kit.financial_report_wiz_modified"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='debit_credit']" position="after">
+                <field name="team_id"/>
+                <field name="user_id"
+                       attrs="{'invisible': [('team_id','=',False)]}"/>
+            </xpath>
+        </field>
+    </record>
+    <template id="Inherit_report_financial"
+              inherit_id="base_accounting_kit.report_financial">
+        <xpath expr="//div[hasclass('row')]" position="inside">
+            <div class="col-4" t-if="data['form']['team_id']">
+                <strong>Sales Team:</strong>
+                <span t-if="data['form']['team_id']">
+                    <t t-esc="data['form']['team_id'][1]"/>
+                </span>
+                <br/>
+                <strong t-if="data['form']['user_id']">Team Member:</strong>
+                <span t-if="data['form']['user_id']">
+                    <t t-esc="data['form']['user_id'][1]"/>
+                </span>
+            </div>
+        </xpath>
+    </template>
+</odoo>

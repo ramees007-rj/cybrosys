@@ -1,0 +1,60 @@
+<odoo>
+    <record id="audience_list_action" model="ir.actions.act_window">
+        <field name="name">Audience List</field>
+        <field name="res_model">audience.list</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+        <record id="audience_list_tree" model="ir.ui.view">
+            <field name="name">audience_list_tree</field>
+            <field name="model">audience.list</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="last_updated"/>
+                    <field name="contact_count"/>
+                    <field name="open_rate"/>
+                </tree>
+            </field>
+        </record>
+        <record id="audience_list_form" model="ir.ui.view">
+            <field name="name">audience_list_form</field>
+            <field name="model">audience.list</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="last_updated"/>
+                            </group>
+                            <group>
+                                <field name="open_rate"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Contacts">
+                                <field name="contact_ids">
+                                    <tree>
+                                        <field name="email"/>
+                                        <field name="name"/>
+                                        <field name="phone"/>
+                                        <field name="country"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <menuitem id="main_mailer_cloud_audience"
+                  name="Audience"
+                  parent="main_mailer_cloud"
+                  sequence="2"
+        />
+        <menuitem id="main_mailer_cloud_audience_list"
+                  name="Lists"
+                  parent="main_mailer_cloud_audience"
+                  action="audience_list_action"
+                  sequence="1"/>
+</odoo>

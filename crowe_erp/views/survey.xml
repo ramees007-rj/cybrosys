@@ -1,0 +1,73 @@
+<odoo>
+    <!--    Inherit survey question-->
+    <record id="inherit_survey_question" model="ir.ui.view">
+        <field name="name">inherit.survey.question</field>
+        <field name="model">survey.question</field>
+        <field name="inherit_id" ref="survey.survey_question_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='answers']" position="inside">
+                <group>
+                    <field name="model_name"
+                           attrs="{'invisible': [('question_type', '!=', 'Many2one')],'required':[('question_type','=','Many2one')]}"/>
+                </group>
+                <label for="selection_items_ids" attrs="{'invisible':[('question_type','!=','selection')]}"/>
+                <field name="selection_items_ids"
+                       attrs="{'invisible':[('question_type','!=','selection')]}">
+                    <tree editable="bottom">
+                        <field name="name"/>
+                    </tree>
+                </field>
+            </xpath>
+        </field>
+    </record>
+    <!--    Inherit main template of survey-->
+    <template inherit_id='survey.question_container'
+              id="inherit_question_container">
+        <xpath expr="//div[hasclass('o_survey_question_error')]"
+               position="after">
+            <t t-if="question.question_type == 'Many2one'">
+                <t t-call="crowe_erp.question_many2one_choice"/>
+            </t>
+            <t t-if="question.question_type == 'selection'"><t t-call="crowe_erp.question_selection_choice"/></t>
+            <t t-if="question.question_type == 'one2many'"><t t-call="crowe_erp.question_one2many_choice"/></t>
+
+        </xpath>
+    </template>
+    <!--    Creating new template for Many2one question type-->
+    <template id="question_many2one_choice"
+              name="Question: Many2one Selection">
+        <div class="dropdown">
+            <select t-att-name="question.id"
+                    placeholder="Select Industry here"
+                    class="form-control o_survey_questionget_model_values_select_box bg-transparent text-dark rounded-0 p-0 cursor-pointer"
+                    t-att-data-question-type="question.question_type"
+                    t-att-value="answer_lines[0].value_many2one_box if answer_lines else None">
+                <t t-if="question.get_model_values()">
+                    <t t-foreach="question.get_model_values()" t-as="value">
+                        <option t-att-value="value.id">
+                            <t t-esc="value.name"/>
+                        </option>
+                    </t>
+                </t>
+            </select>
+        </div>
+    </template>
+    <!--    Creating new template for Selection question type-->
+    <template id="question_selection_choice" name="Question: Selection">
+        <div class="dropdown">
+            <select t-att-name="question.id"
+                    placeholder="Select here"
+                    class="form-control o_survey_questionget_model_values_select_box bg-transparent text-dark rounded-0 p-0 cursor-pointer"
+                    t-att-data-question-type="question.question_type">
+                <t t-if="question.get_selection_values()">
+                    <t t-foreach="question.get_selection_values()"
+                       t-as="value">
+                        <option t-att-value="value.name">
+                            <t t-esc="value.name"/>
+                        </option>
+                    </t>
+                </t>
+            </select>
+        </div>
+    </template>
+</odoo>

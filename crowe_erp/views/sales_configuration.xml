@@ -1,0 +1,196 @@
+<odoo>
+    <!--    Quotation Configuration-->
+    <record id="sale.action_quotations_with_onboarding"
+            model="ir.actions.act_window">
+        <field name="name">Proposals</field>
+    </record>
+    <record model="ir.ui.menu" id="sale.menu_sale_quotations">
+        <field name="name">Proposals</field>
+    </record>
+    <!--    Proposal Template-->
+    <record id="sale_management.sale_order_template_action"
+            model="ir.actions.act_window">
+        <field name="name">Proposal Templates</field>
+    </record>
+    <record model="ir.ui.menu" id="sale_management.sale_order_template_menu">
+        <field name="name">Proposal Templates</field>
+    </record>
+    <record model="ir.ui.view" id="quotation_template_form_inherit">
+        <field name="name">quotation.template.form.inherit</field>
+        <field name="model">sale.order.template</field>
+        <field name="inherit_id"
+               ref="sale_management.sale_order_template_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//label[@for='number_of_days']"
+                   position="attributes">
+                <attribute name="string">Proposal expires after</attribute>
+            </xpath>
+        </field>
+    </record>
+    <!--    Quotation filter conf-->
+    <record id="sale_order_view_search_inherit_proposal" model="ir.ui.view">
+        <field name="name">sale.order.search.inherit.proposal</field>
+        <field name="model">sale.order</field>
+        <field name="mode">extension</field>
+        <field name="inherit_id"
+               ref="sale.sale_order_view_search_inherit_quotation"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='my_quotation']" position="replace">
+                <filter string="My Proposal" name="my_quotation"
+                        domain="[('user_id', '=', uid)]"/>
+            </xpath>
+            <xpath expr="//filter[@name='draft']"
+                   position="attributes">
+                <attribute name="string">Proposals</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_sales_order_auto_done_setting_inherit" model="ir.ui.view">
+        <field name="name">view.sales.order.auto.done.setting.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_auto_done_setting"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_unlock']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    <!--    Order Line and sale Configuration-->
+    <record model="ir.ui.view" id="sale_order_line_inherit">
+        <field name="name">sale.order.line.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@id='create_invoice']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_quotation_send']"
+                   position="after">
+                <button name="action_approve_proposal" type="object"
+                        states="draft,sent"
+                        class="btn-primary"
+                        string="Approve"/>
+                <button name="send_LOE" type="object" string="Send LOE"
+                        class="btn-primary"
+                        states="approve,loe"/>
+            </xpath>
+            <xpath expr="//button[@name='action_confirm'][2]"
+                   position="replace"/>
+            <xpath expr="//button[@id='action_confirm']"
+                   position="replace">
+                <button name="action_confirm" id="action_confirm"
+                        data-hotkey="v"
+                        string="Confirm" class="btn-primary" type="object"
+                        groups="sales_team.group_sale_salesman_all_leads"
+                        attrs="{'invisible': [('state', 'not in', ['loe','approve'])]}"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//field[@name='product_template_id']"
+                   position="attributes">
+                <attribute name="string">Service</attribute>
+            </xpath>
+            <xpath expr="//field[@name='sale_order_template_id']"
+                   position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <!--            <xpath expr="//field[@name='order_line']//field[@name='name']" position="attributes"><attribute name="invisible">1</attribute></xpath>-->
+            <!--            <xpath expr="//field[@name='order_line']//field[@name='qty_delivered']" position="attributes"><attribute name="invisible">1</attribute></xpath>-->
+            <xpath expr="//group[@name='partner_details']" position="inside">
+                <field name="cost_sheet_id"
+                       domain="[('partner_id', '=', partner_id),('used_check','=',False)]"/>
+                <field name="loe_received"
+                       attrs="{'readonly':[('state','!=','loe')]}"
+                       states="loe,sale,done,cancel"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="domain">['|',('is_company', '=', True),'&amp;',('is_company','=',False),('parent_id','=',False)]</attribute>
+            </xpath>
+        </field>
+    </record>
+    <!-- ONBOARDING STEPS -->
+    <template id="inherit_onboarding_quotation_layout_step"
+              name="Proposal Layout"
+              inherit_id="sale.onboarding_quotation_layout_step">
+        <xpath expr="//t[@t-set='title']" position="replace">
+            <t t-set="title">Proposal Layout</t>
+        </xpath>
+    </template>
+    <template id="inherit_sale_onboarding_sample_quotation_step"
+              name="Sample Quotation"
+              inherit_id="sale.sale_onboarding_sample_quotation_step">
+        <xpath expr="//t[@t-set='title']" position="replace">
+            <t t-set="title">Sample Proposal</t>
+        </xpath>
+    </template>
+    <!--    Sale Settings-->
+    <record id="res_config_settings_view_form_inherit_sale_management2"
+            model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.management2
+        </field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id"
+               ref="sale_management.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='%(sale_management.sale_order_template_action)d']"
+                   position="attributes">
+                <attribute name="string">Proposal Templates</attribute>
+            </xpath>
+            <xpath expr="//div[@id='design_quotation_template_setting']//div[hasclass('text-muted')]"
+                   position="replace">
+                <div class="text-muted">
+                    Design your proposal templates using building blocks
+                    <br/>
+                    <em attrs="{'invisible': [('module_sale_quotation_builder','=',False)]}">
+                        Warning: this option will install the Website app.
+                    </em>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="res_config_settings_view_form_inherit_sale2"
+            model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.sale2
+        </field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id"
+               ref="sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='quotation_validity_days']//div[hasclass('text-muted')]"
+                   position="replace">
+                <div class="text-muted">
+                    Set a default validity on your proposals
+                </div>
+            </xpath>
+            <!--            <xpath expr="//h2[hasvalue('Quotations &amp; Orders')]" position="replace">-->
+            <!--                <h2>Proposals &amp; Orders</h2>-->
+            <!--            </xpath>-->
+        </field>
+    </record>
+    <!--    loe wizard-->
+    <record id="send_loe_wizard_from_view" model="ir.ui.view">
+        <field name="name">send.loe.wizard.from.view</field>
+        <field name="model">send.loe.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="partner_ids" widget="many2many_tags_email"/>
+                    <field name="subject"/>
+                    <field name="sale_order_id" invisible="1"/>
+                    <field name="company_id" invisible="1"/>
+                    <field name="template_id" invisible="1"/>
+                </group>
+                <div id="body">
+                    <field name="body"/>
+                </div>
+                <div id="attachments">
+                    <field name="attachment_ids" widget="many2many_binary"/>
+                </div>
+                <footer>
+                    <button name="action_send_mail" type="object"
+                            string="Send"/>
+                    <button string="Cancel" class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

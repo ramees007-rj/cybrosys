@@ -1,0 +1,17 @@
+<odoo>
+    <record id="hr_job_inherit" model="ir.ui.view">
+        <field name="name">hr.job.inherit</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='recruitment2']" position="inside">
+                <label for="minimum_cost"/>
+                <div class="o_row" name="recruitment_target">
+                    <field name="minimum_cost" class="col-3 ps-0"/>
+                    <span class="ps-1">Per Hour</span>
+                    <field name="currency_id" invisible="1"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

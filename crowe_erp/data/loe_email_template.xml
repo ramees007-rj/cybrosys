@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+        <record id="loe_email_template" model="mail.template">
+            <field name="name">LOE</field>
+            <field name="model_id" ref="crowe_erp.model_send_loe_wizard"/>
+            <field name="email_from">"{{ object.company_id.name }}" &lt;{{
+                (object.company_id.email or user.email) }}&gt;
+            </field>
+            <field name="email_to">{{ object.partner_ids.email }}</field>
+            <field name="subject">Letter Of Engagement</field>
+            <field name="body_html" type="html">
+                <div>
+                    Hello,<br/>
+                    Your Pro forma invoice for proposal <t t-esc="object.sale_order_id.name"/> (with reference: ) amounting in <t t-esc="object.company_id.currency_id.symbol"/><t t-esc="object.sale_order_id.amount_total"/>
+                    is available.<br/>
+                    Do not hesitate to contact us if you have any questions.<br/><br/><br/><br/>
+                    --<t t-esc="object.company_id.name"/>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

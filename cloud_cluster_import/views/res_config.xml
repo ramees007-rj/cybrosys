@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.cluoud_cluster_import</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="hr_attendance.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='overtime_settings']" position="after">
+                <div class="row mt16 o_settings_container">
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <div class="row">
+                                <div class="col">
+                                    <label for="instance_url"/>
+                                    <br/>
+                                </div>
+                                <div class="col">
+                                    <field name="instance_url"/>
+                                    <br/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="database_name"/>
+                                    <br/>
+                                </div>
+                                <div class="col">
+                                    <field name="database_name"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="user_name"/>
+                                    <br/>
+                                </div>
+                                <div class="col">
+                                    <field name="user_name"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="api_key"/>
+                                    <br/>
+                                </div>
+                                <div class="col">
+                                    <field name="api_key"/>
+                                </div>
+                            </div>
+                            <button name="import_record_cloud" type="object" string="Import" class="btn-primary"/>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

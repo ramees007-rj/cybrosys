@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+   <t t-name="FleetLocation">
+       <div class="oh_dashboards" style="margin-top: 20px;">
+           <div class="container-fluid o_pj_dashboard">
+               <div class="selection col-6 col-md-2">
+                   <div id="fleet_map" style="width: 100%; height: 100vh;"/>
+               </div>
+           </div>
+       </div>
+   </t>
+</template>

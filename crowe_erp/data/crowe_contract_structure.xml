@@ -1,0 +1,116 @@
+<odoo>
+    <data>
+        <!--        Salary Rule-->
+        <record id="hr_salary_rule_mobile_allowance" model="hr.salary.rule">
+            <field name="amount_select">code</field>
+            <field name="code">MA</field>
+            <field name="category_id" ref="hr_payroll_community.ALW"/>
+            <field name="name">Mobile Allowance</field>
+            <field name="amount_python_compute">if worked_days.unpaid:
+                result = contract.mobile_allowance-(contract.mobile_allowance/30)*worked_days.unpaid.number_of_days
+                else:
+                result = contract.mobile_allowance
+            </field>
+        </record>
+        <record id="hr_salary_rule_managerial_remuneration" model="hr.salary.rule">
+            <field name="amount_select">code</field>
+            <field name="code">MR</field>
+            <field name="category_id" ref="hr_payroll_community.ALW"/>
+            <field name="name">Managerial remuneration</field>
+            <field name="amount_python_compute">if worked_days.unpaid:
+                result =
+                contract.managerial_remuneration-(contract.managerial_remuneration/30)*worked_days.unpaid.number_of_days
+                else:
+                result = contract.managerial_remuneration
+            </field>
+        </record>
+        <record id="hr_salary_rule_car_allowance" model="hr.salary.rule">
+            <field name="amount_select">code</field>
+            <field name="code">CA</field>
+            <field name="category_id" ref="hr_payroll_community.ALW"/>
+            <field name="name">Car Allowance</field>
+            <field name="amount_python_compute">if worked_days.unpaid:
+                result = contract.car_allowance-(contract.car_allowance/30)*worked_days.unpaid.number_of_days
+                else:
+                result = contract.car_allowance
+            </field>
+        </record>
+        <record id="hr_salary_rule_outstation_allowance" model="hr.salary.rule">
+            <field name="amount_select">code</field>
+            <field name="code">OA</field>
+            <field name="category_id" ref="hr_payroll_community.ALW"/>
+            <field name="name">Outstation allowance</field>
+            <field name="amount_python_compute">result = contract.outstation_allowance</field>
+        </record>
+        <record id="hr_salary_rule_incentives" model="hr.salary.rule">
+            <field name="amount_select">code</field>
+            <field name="code">INC</field>
+            <field name="category_id" ref="hr_payroll_community.ALW"/>
+            <field name="name">Incentives</field>
+            <field name="amount_python_compute">result = contract.incentives</field>
+        </record>
+        <record id="hr_salary_rule_conveyance" model="hr.salary.rule">
+            <field name="amount_select">code</field>
+            <field name="code">CAC</field>
+            <field name="category_id" ref="hr_payroll_community.ALW"/>
+            <field name="name">Conveyance Allowance CROWE</field>
+            <field name="amount_python_compute">if worked_days.unpaid:
+                result =
+                contract.conveyance_allowance-(contract.conveyance_allowance/30)*worked_days.unpaid.number_of_days
+                else:
+                result = contract.conveyance_allowance
+            </field>
+
+        </record>
+        <record id="hr_salary_rule_salary_advance" model="hr.salary.rule">
+            <field name="amount_select">code</field>
+            <field name="code">AS</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="name">Salary advance</field>
+            <field name="amount_python_compute">result = contract.salary_advance</field>
+        </record>
+        <record id="hr_salary_rule_fine" model="hr.salary.rule">
+            <field name="amount_select">code</field>
+            <field name="code">FINE</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="name">Fine</field>
+            <field name="amount_python_compute">result = contract.fine</field>
+        </record>
+        <record id="hr_salary_rule_social_insurance" model="hr.salary.rule">
+            <field name="amount_select">code</field>
+            <field name="code">SI</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="name">Social insurance - employee contribution</field>
+            <field name="amount_python_compute">result = contract.social_insurance</field>
+        </record>
+    </data>
+    <!--    salary structure-->
+    <record id="manager_partner_structure" model="hr.payroll.structure">
+        <field name="code">MPEPS</field>
+        <field name="name">Managing partner &amp; engaged partners</field>
+        <field eval="[(6, 0, [ref('hr_payroll_community.hr_rule_hra'),ref('hr_salary_rule_mobile_allowance'), ref('hr_salary_rule_managerial_remuneration'),ref('hr_salary_rule_car_allowance'),ref('hr_salary_rule_outstation_allowance'),ref('hr_salary_rule_incentives'),ref('hr_salary_rule_conveyance'),ref('hr_salary_rule_salary_advance'),ref('hr_salary_rule_fine'),ref('hr_salary_rule_social_insurance')])]"
+               name="rule_ids"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+    <record id="employee_structure" model="hr.payroll.structure">
+        <field name="code">EMPS</field>
+        <field name="name">Employees</field>
+        <field eval="[(6, 0, [ref('hr_payroll_community.hr_rule_hra'),ref('hr_salary_rule_mobile_allowance'),ref('hr_salary_rule_car_allowance'),ref('hr_salary_rule_outstation_allowance'),ref('hr_salary_rule_incentives'),ref('hr_salary_rule_conveyance'),ref('hr_salary_rule_salary_advance'),ref('hr_salary_rule_fine'),ref('hr_salary_rule_social_insurance')])]"
+               name="rule_ids"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <!--    leave type code-->
+    <record id="hr_holidays.holiday_status_cl" model="hr.leave.type">
+        <field name="code">paid</field>
+    </record>
+    <record id="hr_holidays.holiday_status_sl" model="hr.leave.type">
+        <field name="code">paid</field>
+    </record>
+    <record id="hr_holidays.holiday_status_comp" model="hr.leave.type">
+        <field name="code">paid</field>
+    </record>
+    <record id="hr_holidays.holiday_status_unpaid" model="hr.leave.type">
+        <field name="code">unpaid</field>
+    </record>
+</odoo>

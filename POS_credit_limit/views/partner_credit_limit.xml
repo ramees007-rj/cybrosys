@@ -1,0 +1,13 @@
+<odoo>
+    <record id="partner_form_credit_limit_pos_limit" model="ir.ui.view">
+        <field name="name">partner.form.credit.limit.pos_limit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account.view_partner_property_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='credit_limits']"
+                   position="inside">
+                <field name="blocking_amount" class="oe_inline" attrs="{'invisible': [('use_partner_credit_limit', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

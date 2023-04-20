@@ -1,0 +1,141 @@
+<odoo>
+    <template id="report_control_sheet_template_print">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <h1 align="center">
+                    <b>REPORT CONTROL SHEET</b>
+                </h1>
+                <br/>
+                <br/>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>STAGE</th>
+                            <th>USER</th>
+                            <th>TIME</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-if="allocated">
+                            <td>Allocated</td>
+                            <td>
+                                <t t-esc="allocated"/>
+                            </td>
+                            <td>
+                                <t t-esc="allocated_time"/>
+                            </td>
+                        </tr>
+                        <tr t-if="wo_approved_user_id">
+                            <td>Work Order Approved</td>
+                            <td>
+                                <t t-esc="wo_approved_user_id"/>
+                            </td>
+                            <td>
+                                <t t-esc="Wo_approved_time"/>
+                            </td>
+                        </tr>
+                        <tr t-if="field_work_started_user_id">
+                            <td>Field Work Started</td>
+                            <td>
+                                <t t-esc="field_work_started_user_id"/>
+                            </td>
+                            <td>
+                                <t t-esc="field_work_started_time"/>
+                            </td>
+                        </tr>
+                        <tr t-if="field_work_complete_user_id">
+                            <td>Field Work Completed</td>
+                            <td>
+                                <t t-esc="field_work_complete_user_id"/>
+                            </td>
+                            <td>
+                                <t t-esc="fo_completed_time"/>
+                            </td>
+                        </tr>
+                        <tr t-if="supervisor_user_id">
+                            <td>SuperVisor Check</td>
+                            <td>
+                                <t t-esc="supervisor_user_id"/>
+                            </td>
+                            <td>
+                                <t t-esc="supervisor_time"/>
+                            </td>
+                        </tr>
+                        <tr t-if="manager_review_user_id">
+                            <td>Manager Check</td>
+                            <td>
+                                <t t-esc="manager_review_user_id"/>
+                            </td>
+                            <td>
+                                <t t-esc="manager_date"/>
+                            </td>
+                        </tr>
+                        <tr t-if="ep_review_user_id">
+                            <td>Engagement Partner Review</td>
+                            <td>
+                                <t t-esc="ep_review_user_id"/>
+                            </td>
+                            <td>
+                                <t t-esc="ep_review_time"/>
+                            </td>
+                        </tr>
+                        <tr t-if="preliminary_clearance_user_id">
+                            <td>Preliminary Clearance</td>
+                            <td>
+                                <t t-esc="preliminary_clearance_user_id"/>
+                            </td>
+                            <td>
+                                <t t-esc="preliminary_clearance_time"/>
+                            </td>
+                        </tr>
+                        <tr t-if="draft_dele_user_id">
+                            <td>Draft Delivery</td>
+                            <td>
+                                <t t-esc="draft_dele_user_id"/>
+                            </td>
+                            <td>
+                                <t t-esc="draft_dele_time"/>
+                            </td>
+                        </tr>
+                        <tr t-if="final_clearance_user_id">
+                            <td>Final Clearance</td>
+                            <td>
+                                <t t-esc="final_clearance_user_id"/>
+                            </td>
+                            <td>
+                                <t t-esc="final_clearance_time"/>
+                            </td>
+                        </tr>
+                        <tr t-if="ep_sign_off_user_id">
+                            <td>Engagement Partner Sign Off</td>
+                            <td>
+                                <t t-esc="ep_sign_off_user_id"/>
+                            </td>
+                            <td>
+                                <t t-esc="ep_sign_off_time"/>
+                            </td>
+                        </tr>
+                        <tr t-if="final_delivered_user_id">
+                            <td>Final Delivered</td>
+                            <td>
+                                <t t-esc="final_delivered_user_id"/>
+                            </td>
+                            <td>
+                                <t t-esc="final_delivered_time"/>
+                            </td>
+                        </tr>
+                        <tr t-if="complete_user_id">
+                            <td>Complete</td>
+                            <td>
+                                <t t-esc="complete_user_id"/>
+                            </td>
+                            <td>
+                                <t t-esc="complete_time"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </t>
+        </t>
+    </template>
+</odoo>

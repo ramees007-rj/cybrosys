@@ -1,0 +1,28 @@
+<odoo>
+    <template id="basic_snippet" name="Dynamic Snippet">
+        <section class="container dynamic_snippet_blog">
+            <div class="row">
+                <t t-foreach="key" t-as="p">
+                    <div class="card"
+                         style="width: 18rem;">
+                        <img class="o_carousel_product_card_img_top card-img-top"
+                             style="width:5cm; height:5cm; padding:10px;"
+                             t-attf-src="/web/image/product.product/{{ p.id }}/image_1920"
+                        />
+                        <div class="card-body">
+                            <p class="card-text">
+                                <t t-esc="p.name"/>
+                            </p>
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </section>
+    </template>
+    <template id="external_snippet" inherit_id="website.snippets" priority="9">
+        <xpath expr="//div[@id='snippet_effect']//t[@t-snippet][last()]"
+               position="after">
+            <t t-snippet="snippet_16.basic_snippet"/>
+        </xpath>
+    </template>
+</odoo>

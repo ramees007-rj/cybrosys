@@ -1,0 +1,353 @@
+<odoo>
+    <template id="report_invoice_document_crowe"
+              inherit_id="account.report_invoice_document">
+        <xpath expr="." position="replace">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div style="border-bottom: 2px solid white;">
+                        <div class="row">
+                            <div class="col-xs-6" align="right"
+                                 style="font-size: 12pt;line-height: 23px;">
+                                <span class="text-left"
+                                      style="font-size: 18pt;font-weight: bold;font-family:Helvetica,Verdana,Arial,sans,Lucida Grande,Calibri;">
+                                    <t t-esc="o.company_id.name"/>
+                                </span>
+                                <br/>
+                                <t t-if="o.company_id.zip">PO Box #
+                                    <span t-field="o.company_id.zip"/>
+                                    ,
+                                </t>
+                                <t t-if="o.company_id.street">
+                                    <span t-field="o.company_id.street"/>
+                                </t><x></x>
+                                <br/>
+                                <t t-if="o.company_id.street2">
+                                    <span t-field="o.company_id.street2"/>
+                                    ,
+                                </t>
+                                <t t-if="o.company_id.city">
+                                    <span t-field="o.company_id.city"/>
+                                </t>
+                                <t t-if="o.company_id.state_id">
+                                    <br/>
+                                    <span t-field="o.company_id.state_id.name"/>
+                                    ,
+                                </t>
+                                <t t-if="o.company_id.country_id">
+                                    <span t-field="o.company_id.country_id.name"/>
+                                </t>
+                                <t t-if="o.company_id.email">
+                                    <br/>
+                                    <span style="color:#900C3F;">
+                                        <i class="fa fa-envelope"/>
+                                    </span>
+                                    :
+                                    <span t-field="o.company_id.email"/>
+                                </t>
+                                <t t-if="o.company_id.phone">
+                                    <br/>
+                                    <span style="color:#900C3F;">
+                                        <i class="fa fa-phone"/>
+                                    </span>
+                                    :
+                                    <span t-field="o.company_id.phone"/>
+                                </t>
+                                <br/>
+                                <t t-if="o.company_id.vat">
+                                    <span t-if="o.company_id.country_id.code == 'AE'">
+                                        TRN # :
+                                    </span>
+                                    <span t-if="o.company_id.country_id.code == 'IN'">
+                                        TIN # :
+                                    </span>
+                                    <span t-field="o.company_id.vat"/>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page"
+                         style="font-size: 14px;">
+                        <br/>
+                        <br/>
+                        <div class="col-xs-12 text-center"
+                             style="line-height: 1.3em;font-size:14px;font-weight: bold;font-family:Helvetica,Verdana,Arial,sans,Lucida Grande,Calibri;">
+                            <h3>
+                                <strong t-if="o.amount_tax > 0">
+                                    TAX INVOICE
+                                </strong>
+                                <strong t-else=" ">
+                                    INVOICE
+                                </strong>
+                            </h3>
+                        </div>
+                        <div class="row">
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                        </div>
+                        <div class="row">
+                            <br/>
+                            <div name="invoice_address"
+                                 class="col-7"
+                                 style="font-size:16px">
+                                <strong>
+                                    <span t-field="o.partner_id"/>
+                                </strong>
+                                <br/>
+                                <t t-if="o.partner_id.street">
+                                    <span t-field="o.partner_id.street"/>
+                                </t>
+                                <t t-if="o.partner_id.street2">
+                                    <span t-field="o.partner_id.street2"/>
+                                </t>
+                                <t t-if="o.partner_id.street or o.partner_id.street2">
+                                    <br/>
+                                </t>
+                                <t t-if="o.partner_id.city">
+                                    <span t-field="o.partner_id.city"/>
+                                </t>
+                                <t t-if="o.partner_id.state_id">
+                                    <span t-field="o.partner_id.state_id"/>
+                                </t>
+                                <t t-if="o.partner_id.country_id">
+                                    <span t-field="o.partner_id.country_id"/>
+                                </t>
+                                <t t-if="o.partner_id.city or o.partner_id.state_id or o.partner_id.country_id">
+                                    <br/>
+                                </t>
+                                <t t-if="o.partner_id.vat">
+                                    VATIN #:
+                                    <span t-field="o.partner_id.vat"/>
+                                </t>
+                            </div>
+                            <div class="col-5"
+                                 style="font-size:16px;">
+                                <table class="table table-borderless">
+                                    <tr>
+                                        <td style="border:none;">INVOICE#</td>
+                                        <td style="border:none;">:</td>
+                                        <td style="border:none;">
+                                            <t t-if="o.name">
+                                                &amp;nbsp;
+                                                <strong>
+                                                    <span t-field="o.name"/>
+                                                </strong>
+                                            </t>
+                                            <t t-if="not o.name">
+                                                &amp;nbsp;
+                                                <strong>DRAFT</strong>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border:none;">Invoice / Payment date</td>
+                                        <td style="border:none;">:</td>
+                                        <td style="border:none;">
+                                            <t t-if="o.name">
+                                                &amp;nbsp;
+                                                <strong>
+                                                    <span t-field="o.invoice_date"/>
+                                                </strong>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border:none;">Supply Date</td>
+                                        <td style="border:none;">:</td>
+                                        <td style="border:none;">
+                                            <t t-if="o.name">
+                                                &amp;nbsp;
+                                                <strong>
+                                                    <span t-field="o.invoice_date"/>
+                                                </strong>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <br/>
+                            <br/>
+                        </div>
+                        <strong>TO PROFESSIONAL SERVICES :</strong>
+                        <br/>
+                        <table class="table table-condensed"
+                               style="padding-left:2px;width:100%;border:1px solid black;font-size:16px;">
+                            <t t-if="o.amount_tax > 0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center"
+                                            style="border-right:1px solid black;width:5%;">
+                                            Sr. No.
+                                        </th>
+                                        <th class="text-center"
+                                            style="border-right:1px solid black;width:37%;">
+                                            DESCRIPTION
+                                        </th>
+                                        <th class="text-center"
+                                            style="border-right:1px solid black;width:15%;">
+                                            Taxable Amount(RO)
+                                        </th>
+                                        <th class="text-center"
+                                            style="border-right:1px solid black;width:15%;">
+                                            Vat (@5%)(RO)
+                                        </th>
+                                        <th class="text-right"
+                                            style="border-right:1px solid black;width:15%;">
+                                            Total(RO)
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="count" t-value="0"/>
+                                    <tr t-foreach="o.invoice_line_ids"
+                                        t-as="line" t-att-style="styles">
+                                        <t t-set="count" t-value="count + 1"/>
+                                        <td class="text-center"
+                                            style="border:1px solid black;text-align:center;width:5%;">
+                                            <span t-esc="count"/>
+                                        </td>
+                                        <td class="text-left"
+                                            style="border:1px solid black;text-align:left;width:37%;">
+                                            <span t-field="line.name"/>
+                                        </td>
+                                        <td class="text-right"
+                                            style="border:1px solid black;text-align:right;width:15%;">
+                                            <span t-field="line.price_subtotal"/>
+                                        </td>
+                                        <t t-set="vat_total"
+                                           t-value="(line.price_subtotal * 5)/100"/>
+                                        <td class="text-right"
+                                            style="border:1px solid black;text-align:right;width:15%;">
+                                            <t t-esc="vat_total"/>
+                                        </td>
+                                        <td class="text-right"
+                                            style="border:1px solid black;text-align:right;width:15%;">
+                                            <t t-set="t_total"
+                                               t-value="line.price_subtotal + vat_total "/>
+                                            <t t-esc="t_total"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="font-size:14px;font-weight: bold;font-family:Helvetica,Verdana,Arial,sans,Lucida Grande,Calibri;">
+                                        <td colspan="2"
+                                            style="border:1px solid black;text-align:left;">
+                                            TOTAL IN RO
+                                        </td>
+                                        <td style="border:1px solid black;text-align:right;width:10%">
+                                            <span t-esc="o.amount_untaxed"
+                                                  t-options="{&quot;widget&quot;: &quot;float&quot;,&quot;precision&quot;: o.currency_id.decimal_places}"/>
+                                        </td>
+                                        <td style="border:1px solid black;text-align:right;width:10%">
+                                            <span t-esc="o.amount_tax"
+                                                  t-options="{&quot;widget&quot;: &quot;float&quot;,&quot;precision&quot;: o.currency_id.decimal_places}"/>
+                                        </td>
+                                        <td style="border:1px solid black;text-align:right;width:10%">
+                                            <span t-esc="o.amount_total"
+                                                  t-options="{&quot;widget&quot;: &quot;float&quot;,&quot;precision&quot;: o.currency_id.decimal_places}"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="font-size:14px;font-weight: bold;font-family:Helvetica,Verdana,Arial,sans,Lucida Grande,Calibri;">
+                                        <td colspan="5"
+                                            style="border:1px solid black;text-align:left;">
+                                            TOTAL IN WORDS
+                                            <br/>
+                                            <span t-esc="'Rials Omani %s Only' % o.currency_id.amount_to_text(o.amount_total)"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </t>
+                            <t t-else=" ">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center"
+                                            style="border-right:1px solid black;width:5%;">
+                                            Sr. No.
+                                        </th>
+                                        <th class="text-center"
+                                            style="border-right:1px solid black;width:37%;">
+                                            DESCRIPTION
+                                        </th>
+                                        <th class="text-right"
+                                            style="border-right:1px solid black;width:15%;">
+                                            Total(RO)
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="count" t-value="0"/>
+                                    <tr t-foreach="o.invoice_line_ids"
+                                        t-as="line" t-att-style="styles">
+                                        <t t-set="count" t-value="count + 1"/>
+                                        <td class="text-center"
+                                            style="border:1px solid black;text-align:center;width:5%;">
+                                            <span t-esc="count"/>
+                                        </td>
+                                        <td class="text-left"
+                                            style="border:1px solid black;text-align:left;width:37%;">
+                                            <span t-field="line.name"/>
+                                        </td>
+                                        <td class="text-right"
+                                            style="border:1px solid black;text-align:right;width:15%;">
+                                            <span t-field="line.price_subtotal"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="font-size:14px;font-weight: bold;font-family:Helvetica,Verdana,Arial,sans,Lucida Grande,Calibri;">
+                                        <td colspan="2"
+                                            style="border:1px solid black;text-align:left;">
+                                            TOTAL IN RO
+                                        </td>
+                                        <td style="border:1px solid black;text-align:right;width:10%">
+                                            <span t-field="o.amount_total"
+                                                  t-options='{"widget": "float","precision": o.currency_id.decimal_places}'/>
+                                        </td>
+                                    </tr>
+                                    <tr style="font-size:14px;font-weight: bold;font-family:Helvetica,Verdana,Arial,sans,Lucida Grande,Calibri;">
+                                        <td colspan="3"
+                                            style="border:1px solid black;text-align:left;">
+                                            TOTAL IN WORDS
+                                            <br/>
+                                            <span t-esc="'Rials Omani %s Only' % o.currency_id.amount_to_text(o.amount_total).replace('Rials', '')"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </t>
+                        </table>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <br/>
+                                THE ABOVE AMOUNT IS DUE, PROMPT SETTLEMENT WILL
+                                BE APPRECIATED
+                                <br/>
+                                <div style="font-size:14px;border: 0px solid white;padding-left: 5px;">
+                                    <t t-if="o.company_id.bank_details">
+                                        <strong>PAYMENT IS TO BE MADE TO THE FOLLOWING ACCOUNT:</strong>
+                                        <br/>
+                                        <br/>
+                                        <span t-field="o.company_id.bank_details"/>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="font-weight: bold;font-size: 10pt;font-family:Helvetica,Verdana,Arial,sans,Lucida Grande,Calibri;"
+                             class="footer text-center">
+                            <strong>All payments must be issued in the name
+                                of “Crowe Mak Ghazali llc”.
+                            </strong>
+                            <br/>
+
+                            <strong style="color: #B2BABB;">This is an
+                                electronically generated invoice and does
+                                not require an
+                                authorized signature or seal.
+                            </strong>
+                        </div>
+                    </div>
+                </t>
+                <div id="total"/>
+                <div id="reference"/>
+            </t>
+        </xpath>
+    </template>
+</odoo>
