@@ -1,0 +1,15 @@
+<odoo>
+    <record id="purchase_limit_inherit" model="ir.ui.view">
+        <field name="name">purchase.limit.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='point_of_sale']" position="inside">
+                <field name="active_purchase_limit"
+                       string="Activate Purchase Limit"/>
+                <field name="purchase_limit"
+                       attrs="{'invisible':[('active_purchase_limit','=',False)]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

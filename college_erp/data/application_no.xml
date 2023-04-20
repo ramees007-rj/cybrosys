@@ -1,0 +1,8 @@
+<odoo>
+    <record id="seq_application_no" model="ir.sequence">
+        <field name="name">Student Application No</field>
+        <field name="code">application.no</field>
+        <field name="prefix">AP</field>
+        <field name="padding">5</field>
+    </record>
+</odoo>

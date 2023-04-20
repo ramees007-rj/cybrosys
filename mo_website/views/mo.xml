@@ -1,0 +1,173 @@
+<odoo>
+    <record id="mo_customer_selection" model="ir.ui.view">
+        <field name="name">mo.customer.selection</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='bom_id']" position="after">
+                <field name="customer_id"/>
+            </xpath>
+        </field>
+    </record>
+    <template id="portal_my_home_mo"
+              inherit_id="portal.portal_my_home"
+              priority="31">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Manufacturing Orders</t>
+                <t t-set="url" t-value="'/my/mo'"/>
+                <t t-set="placeholder_count" t-value="'mo_count'"/>
+            </t>
+        </xpath>
+    </template>
+    <template id="portal_my_home_menu_invoice"
+              inherit_id="portal.portal_breadcrumbs" priority="50">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'mo_orders'"
+                t-attf-class="breadcrumb-item active">
+                Manufacturing Orders
+            </li>
+        </xpath>
+    </template>
+    <template id="portal_my_mo" name="My Mo">
+        <t t-call="portal.portal_layout">
+            <t t-if="not mo_orders">
+                <p>There are currently no manufacturing orders for your
+                    account.
+                </p>
+            </t>
+            <t t-if="mo_orders" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>Reference #</th>
+                        <th>Scheduled Date</th>
+                        <th>Product</th>
+                        <th>Component Status</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="mo_orders" t-as="mo">
+                        <tr>
+                            <td>
+                                <a t-att-href="mo.get_portal_url()"
+                                   t-att-title="mo.name">
+                                    <t t-esc="mo.name"/>
+                                </a>
+                            </td>
+                            <td>
+                                <t t-esc="mo.date_planned_start"/>
+                            </td>
+                            <td>
+                                <t t-esc="mo.product_tmpl_id.name"/>
+                            </td>
+                            <td>
+                                <t t-if="mo.components_availability==false">
+                                    Not Available
+                                </t>
+                                <t t-else="">
+                                    <t t-esc="mo.components_availability"/>
+                                </t>
+                            </td>
+                            <td>
+                                <t t-esc="mo.state"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </t>
+        </t>
+    </template>
+    <template id="portal_my_home_menu_invoice_page"
+              inherit_id="portal.portal_breadcrumbs" priority="50">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'mo_orders_view'"
+                t-attf-class="breadcrumb-item">
+                <a href="/my/mo">
+                    Manufacturing Orders
+                </a>
+            </li>
+        </xpath>
+    </template>
+    <template id="portal_my_mo_view">
+        <t t-call="portal.portal_layout">
+            <div class="o_portal_html_view shadow p-3 bg-white">
+                <t t-foreach="mo_order_single" t-as="mo">
+                    <t t-call="web.external_layout">
+                        <t t-set="address">
+                            <address t-field="mo.message_partner_ids"
+                                     t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                            <div t-if="mo.message_partner_ids.vat"
+                                 class="mt16">
+                                <t t-if="mo.company_id.account_fiscal_country_id.vat_label"
+                                   t-esc="mo.company_id.account_fiscal_country_id.vat_label"
+                                   id="inv_tax_id_label"/>
+                                <t t-else="">Tax ID</t>:
+                                <span t-field="mo.message_partner_ids.vat"/>
+                            </div>
+                        </t>
+                        <div class="page">
+                            <h2 t-field="mo.name"/>
+                            <div id="informations" class="row mt-4 mb-4">
+                                <div class="col-auto col-3 mw-100 mb-2">
+                                    <strong>Product</strong>
+                                    <p class="m-0"
+                                       t-field="mo.product_tmpl_id.name"/>
+                                </div>
+                                <div class="col-auto col-3 mw-100 mb-2">
+                                    <strong>Quantity</strong>
+                                    <p class="m-0"
+                                       t-field="mo.product_qty"/>
+                                </div>
+                                <div class="col-auto col-3 mw-100 mb-2">
+                                    <strong>Scheduled Date</strong>
+                                    <p class="m-0"
+                                       t-field="mo.date_planned_start"/>
+                                </div>
+                            </div>
+                            <h3>
+                                <span>Components</span>
+                            </h3>
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">
+                                            <span>Product</span>
+                                        </th>
+                                        <th class="text-left">
+                                            <span>Quantity</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="mo.move_raw_ids.sudo()"
+                                       t-as="com">
+                                        <tr>
+                                            <td id="product_name">
+                                                <a t-att-href="com.product_id.website_url">
+                                                    <span t-field="com.product_id.name"/>
+                                                </a>
+                                            </td>
+                                            <td id="product_qty">
+                                                <span t-field="com.product_qty"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                            <br/>
+                            <br/>
+                            <br/>
+                        </div>
+                    </t>
+                </t>
+            </div>
+            <div id="mo_communication">
+                <h2>History</h2>
+                <t t-call="portal.message_thread">
+                    <t t-set="object" t-value="mo"/>
+                </t>
+            </div>
+        </t>
+    </template>
+</odoo>

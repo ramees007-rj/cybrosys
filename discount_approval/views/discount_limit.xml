@@ -1,0 +1,47 @@
+<odoo>
+    <record id="sale_order_discount_limit_inherit" model="ir.ui.view">
+        <field name="name">sale.order.discount.limit.inherit</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='discount_sale_order_lines']"
+                   position="inside">
+                <div class="o_setting_right_pane"
+                     attrs="{'invisible':[('group_discount_per_so_line','=',False)]}">
+                    <br></br>
+                    <span class="o_form_label">Discount limit</span>
+                    <field name="discount_limits"/>(%)
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="sale_order_inherit" model="ir.ui.view">
+        <field name="name">sale.order.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_quotation_send']"
+                   position="after">
+                <button name="button_request_approval" type="object"
+                        attrs="{'invisible':['|',('check','=',False),('state', 'not in', ['draft'])]}"
+                        class="btn-primary" string="Request for Approval" groups="discount_approval.discount_approval_user"/>
+                <button name="accept" type="object" states="approval" string="Accept" class="btn-primary" groups="discount_approval.discount_approval_manager"/>
+                <button name="reject" type="object" states="approval" string="Reject" groups="discount_approval.discount_approval_manager"/>
+                <field name="check" invisible="1"/>
+            </xpath>
+            <xpath expr="//button[@name='action_quotation_send']"
+                   position="attributes">
+                <attribute name="states"/>
+                <attribute name="attrs">{'invisible': ['|',('check' ,'=',
+                    True),('state', 'not in', ['draft'])]}
+                </attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_confirm'][2]"
+                   position="attributes">
+                <attribute name="attrs">{'invisible': ['|',('check' ,'=',
+                    True),('state', 'not in', ['draft'])]}
+                </attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

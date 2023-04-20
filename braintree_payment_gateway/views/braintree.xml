@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="acquirer_form_braintree" model="ir.ui.view">
+        <field name="name">acquirer.form.braintree</field>
+        <field name="model">payment.acquirer</field>
+        <field name="inherit_id" ref="payment.payment_acquirer_form"/>
+        <field name="arch" type="xml">
+            <xpath expr='//page[@name="acquirer_credentials"]/group[@name="acquirer"]' position='after'>
+                <group attrs="{'invisible': [('provider', '!=', 'braintree')]}">
+                    <field name="merchant_id" password="True" attrs="{'required':[ ('provider', '=', 'braintree')]}"/>
+                    <field name="public_key" password="True" attrs="{'required':[ ('provider', '=', 'braintree')]}"/>
+                    <field name="private_key" password="True" attrs="{'required':[ ('provider', '=', 'braintree')]}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

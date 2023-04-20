@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+contact_creation_from_survey.access_create_contact_survey,access_create_contact_survey,contact_creation_from_survey.model_create_contact_survey,base.group_user,1,1,1,1

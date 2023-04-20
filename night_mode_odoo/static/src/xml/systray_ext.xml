@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="night_mode.systray.ThemeMenu">
+        <li class="themes_selector_li">
+            <label class="switch" style="margin-bottom:0px;" title="Day / Night Mode">
+               <div class="image-checkbox">
+                   <input type="checkbox" id="check" class="toggle-switch" style="display: none;"/>
+                   <i class="fa fa-moon-o moon-color" id="fa-icon"/>
+               </div>
+            </label>
+        </li>
+    </t>
+</templates>
+

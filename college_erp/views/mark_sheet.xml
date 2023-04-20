@@ -1,0 +1,61 @@
+<odoo>
+    <record id="college_mark_sheet" model="ir.actions.act_window">
+        <field name="name">College Mark Sheet</field>
+        <field name="res_model">college.mark.sheet</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="college_mark_sheet_tree" model="ir.ui.view">
+        <field name="name">College Mark Sheet Tree</field>
+        <field name="model">college.mark.sheet</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="student_id"/>
+                <field name="course"/>
+                <field name="class_name"/>
+                <field name="exam"/>
+                <field name="semester"/>
+                <field name="pass_or_fail" widget="toggle_button"/>
+            </tree>
+        </field>
+    </record>
+    <record id="college_mark_sheet_form" model="ir.ui.view">
+        <field name="name">Collage Mark Sheet Form</field>
+        <field name="model">college.mark.sheet</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="student_id"/>
+                            <field name="course"/>
+                            <field name="class_name"/>
+                            <field name="semester"/>
+                        </group>
+                        <group>
+                            <field name="exam"/>
+                            <field name="pass_or_fail" widget="toggle_button"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Subjects">
+                            <field name="subject_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="mark"/>
+                                    <field name="max_mark"/>
+                                    <field name="pass_mark"/>
+                                    <field name="max_mark"/>
+                                    <field name="pass_or_fail" widget="toggle_button"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right" colspan="2">
+                                <field name="total_mark"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+</odoo>

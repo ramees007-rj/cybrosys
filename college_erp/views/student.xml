@@ -1,0 +1,244 @@
+<odoo>
+    <menuitem id="college_main_menu"
+              name="College ERP"
+              sequence="0"/>
+    <record id="college_student_action" model="ir.actions.act_window">
+        <field name="name">Students</field>
+        <field name="res_model">college.students</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="college_student_tree" model="ir.ui.view">
+        <field name="name">college student tree</field>
+        <field name="model">college.students</field>
+        <field name="arch" type="xml">
+            <tree>
+                <!--                <field name="admission_no"/>-->
+                <!--                <field name="admission_date"/>-->
+                <field name="first_name"/>
+                <field name="last_name"/>
+                <field name="father"/>
+                <field name="mother"/>
+                <field name="communication_address"/>
+                <field name="permanent_address"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="course" class="oe_inline oe_no_button"/>
+                <field name="semester" class="oe_inline oe_no_button"/>
+                <field name="academic_year"/>
+            </tree>
+        </field>
+    </record>
+    <record id="college_students_form" model="ir.ui.view">
+        <field name="name">college student form</field>
+        <field name="model">college.students</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="admission_no"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="first_name"/>
+                            <field name="last_name"/>
+                        </group>
+                        <group>
+                            <field name="phone"/>
+                            <field name="email"/>
+                            <field name="admission_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Other Info">
+                            <group>
+                                <group>
+                                    <field name="course" class="oe_inline oe_no_button"/>
+                                    <field name="semester" class="oe_inline oe_no_button"/>
+                                    <field name="academic_year"/>
+                                </group>
+                                <group>
+                                    <field name="father"/>
+                                    <field name="mother"/>
+                                    <field name="communication_address"/>
+                                    <field name="permanent_address"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <menuitem id="college_students"
+              name="Students"
+              parent="college_main_menu"
+              action="college_student_action"
+              sequence="0"/>
+    <record id="admission_action" model="ir.actions.act_window">
+        <field name="name">Admission</field>
+        <field name="res_model">admission</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="admission_tree" model="ir.ui.view">
+        <field name="name">admission tree</field>
+        <field name="model">admission</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="first_name"/>
+                <field name="last_name" optional="hide"/>
+                <field name="father"/>
+                <field name="mother"/>
+                <field name="communication_address"/>
+                <field name="permanent_address" optional="hide"/>
+                <field name="email"/>
+                <field name="academic_year"/>
+                <field name="course_id"/>
+                <field name="date_of_application" optional="hide"/>
+                <field name="educational_institute" optional="hide"/>
+                <field name="state" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+    <record id="admission_form" model="ir.ui.view">
+        <field name="name">admission form</field>
+        <field name="model">admission</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="button_confirm" type="object" states="draft"
+                            string="Confirm" class="oe_highlight"/>
+                    <button name="button_approved" string="Approve"
+                            states="application" type="object"
+                            class="oe_highlight"/>
+                    <button name="button_done" states="approved" type="object"
+                            string="Register"
+                            class="oe_highlight"/>
+                    <button name="button_set_draft"
+                            states="application,approved" type="object"
+                            string="Set to Draft"/>
+                    <button name="button_reject" type="object" string="Reject"
+                            states="draft,application,approved"
+                            attrs="{'invisible': [('state','=','rejected')]}"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,application,approved,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="application_no"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="first_name"/>
+                            <field name="last_name"/>
+                        </group>
+                        <group>
+                            <field name="date_of_application"/>
+                            <field name="phone"/>
+                            <field name="email"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Educational Info">
+                            <group>
+                                <group>
+                                    <field name="course_id"/>
+                                    <field name="semester_id"/>
+                                    <field name="academic_year"/>
+                                </group>
+                                <group>
+                                    <field name="previous_educational_qualification"/>
+                                    <field name="educational_institute"/>
+                                    <field name="certificate_check"/>
+                                    <field name="transfer_certificate"
+                                           string=" "
+                                           attrs="{'invisible':[('certificate_check','=',False)],'required':[('certificate_check','=',True)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Personal Info">
+                            <group>
+                                <group>
+                                    <field name="father"/>
+                                    <field name="mother"/>
+                                </group>
+                                <group>
+                                    <field name="communication_address"/>
+                                    <field name="check_item"/>
+                                    <field name="permanent_address"
+                                           attrs="{'invisible':[('check_item','=',True)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+
+        </field>
+    </record>
+    <menuitem id="admission"
+              name="Admission"
+              parent="college_main_menu"
+              action="admission_action"
+              sequence="1"/>
+    <menuitem id="college_configuration"
+              name="Configuration"
+              parent="college_main_menu"
+              sequence="10"/>
+    <record id="configuration_course_action" model="ir.actions.act_window">
+        <field name="name">Course</field>
+        <field name="res_model">college.course</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="configuration_course_tree" model="ir.ui.view">
+        <field name="name">course tree</field>
+        <field name="model">college.course</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="category"/>
+                <field name="duration"/>
+                <field name="no_of_semester"/>
+            </tree>
+        </field>
+    </record>
+    <record id="configuration_course_form" model="ir.ui.view">
+        <field name="name">course form</field>
+        <field name="model">college.course</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <!--                    <div class="oe_button_box" name="button_box">-->
+                    <!--                        <button name="get_semester" class="oe_stat_button"-->
+                    <!--                                type="object" icon="fa-tag">-->
+                    <!--                            Semester-->
+                    <!--                        </button>-->
+                    <!--                    </div>-->
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="category"/>
+                        </group>
+                        <group>
+                            <field name="duration"/>
+                            <field name="no_of_semester"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Semester">
+                            <field name="semester_ids" context="{'default_course_id': id}"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <menuitem id="configuration_course"
+              name="Course"
+              parent="college_configuration"
+              action="configuration_course_action"
+              sequence="0"/>
+</odoo>

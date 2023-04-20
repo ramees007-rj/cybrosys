@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="Brand" t-inherit="point_of_sale.Orderline"
+       t-inherit-mode="extension" owl="1">
+        <xpath expr="//span[hasclass('product-name')]" position="after">
+            <t t-if="props.line.product.brand_name">
+                <div class="text-muted">
+                    <span style="font-size:13px;">Brand:
+                        <t t-esc="props.line.product.brand_name"/>
+                    </span>
+                </div>
+            </t>
+        </xpath>
+    </t>
+
+    <t t-name="ReceiptBrand" t-inherit="point_of_sale.OrderLinesReceipt"
+       t-inherit-mode="extension" owl="1">
+        <xpath expr="//t[@t-foreach='receipt.orderlines']"
+               position="inside">
+            <t t-if="line.brand_name">
+                <span class="pos-receipt-left-padding">
+                    Brand:
+                    <t t-esc="line.brand_name"/>
+                </span>
+            </t>
+        </xpath>
+    </t>
+</templates>

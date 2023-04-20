@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+college_erp.access_college_students,access_college_students,college_erp.model_college_students,base.group_user,1,1,1,1
+college_erp.access_college_course,access_college_course,college_erp.model_college_course,base.group_user,1,1,1,1
+college_erp.access_admission,access_admission,college_erp.model_admission,base.group_user,1,1,1,1
+college_erp.access_college_semester,access_college_semester,college_erp.model_college_semester,base.group_user,1,1,1,1
+college_erp.access_syllabus,access_syllabus,college_erp.model_syllabus,base.group_user,1,1,1,1
+college_erp.access_college_class,access_college_class,college_erp.model_college_class,base.group_user,1,1,1,1
+college_erp.access_college_exam,access_college_exam,college_erp.model_college_exam,base.group_user,1,1,1,1
+college_erp.access_college_mark_sheet,access_college_mark_sheet,college_erp.model_college_mark_sheet,base.group_user,1,1,1,1
+college_erp.access_college_student_subject,access_college_student_subject,college_erp.model_college_student_subject,base.group_user,1,1,1,1
+college_erp.access_college_class_promotion,access_college_class_promotion,college_erp.model_college_class_promotion,base.group_user,1,1,1,1
+college_erp.access_mark_sheet_report,access_mark_sheet_report,college_erp.model_mark_sheet_report,base.group_user,1,1,1,1

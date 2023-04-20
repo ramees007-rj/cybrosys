@@ -1,0 +1,46 @@
+<odoo>
+    <record id="college_syllabus_action" model="ir.actions.act_window">
+        <field name="name">College Syllabus</field>
+        <field name="res_model">syllabus</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="college_syllabus_form" model="ir.ui.view">
+        <field name="name">Syllabus Form</field>
+        <field name="model">syllabus</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="course"/>
+                            <field name="semester"/>
+                        </group>
+                        <group>
+                            <field name="pass_mark"/>
+                            <field name="max_mark"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="college_syllabus_tree" model="ir.ui.view">
+        <field name="name">Syllabus Tree</field>
+        <field name="model">syllabus</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="pass_mark"/>
+                <field name="max_mark"/>
+                <field name="course" optional="hide"/>
+                <field name="semester" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+    <menuitem id="collage_syllabus"
+              name="Syllabus"
+              parent="college_configuration"
+              action="college_syllabus_action"
+              sequence="2"/>
+</odoo>

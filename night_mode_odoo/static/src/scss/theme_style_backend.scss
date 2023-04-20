@@ -1,0 +1,35 @@
+.image-checkbox
+{
+    cursor: pointer;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 4px solid transparent;
+    outline: 0;
+    margin-top: -4px !important;
+}
+#check
+{
+    display: none !important;
+}
+.image-checkbox-checked #moon{
+    visibility:visible;
+}
+.image-checkbox #sun{
+    visibility:visible;
+}
+#sun{
+    visibility:hidden;
+}
+#moon{
+    visibility:hidden;
+}
+.fa-sun-o{
+color:#e8a214;
+font-size: 130% !important;
+padding:13px !important;
+}
+.fa-moon-o{
+font-size: 130% !important;
+padding:13px !important;
+}

@@ -1,0 +1,60 @@
+<odoo>
+    <record id="college_class_action" model="ir.actions.act_window">
+        <field name="name">College Class</field>
+        <field name="res_model">college.class</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="college_class_form" model="ir.ui.view">
+        <field name="name">College class form</field>
+        <field name="model">college.class</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="semester_id"/>
+                            <field name="academic_year"/>
+                        </group>
+                        <group>
+                            <field name="course_id"/>
+                            <field name="promotion_class" options="{'no_create': True, 'no_create_edit':True}"/>
+
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Student List">
+                            <field name="list_of_student_ids">
+<!--                                <tree>-->
+<!--                                    <field name="first_name"/>-->
+<!--                                    <field name="last_name"/>-->
+<!--                                    <field name="semester"/>-->
+<!--                                    <field name="course"/>-->
+<!--                                    <field name="academic_year"/>-->
+<!--                                </tree>-->
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="college_class_tree" model="ir.ui.view">
+        <field name="name">College class tree</field>
+        <field name="model">college.class</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="semester_id"/>
+            </tree>
+        </field>
+    </record>
+    <menuitem id="class"
+              name="Class"
+              parent="college_main_menu"
+              action="college_class_action"
+              sequence="3"/>
+</odoo>

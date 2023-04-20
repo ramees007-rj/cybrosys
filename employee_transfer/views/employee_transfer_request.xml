@@ -1,0 +1,14 @@
+<odoo>
+    <record id="employee_transfer_request_inherit" model="ir.ui.view">
+        <field name="name">employee.transfer.request.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='323']"
+                   position="after">
+                <button name="request" type="object"
+                        string="Request for Transfer"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

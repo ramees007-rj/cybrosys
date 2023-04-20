@@ -1,0 +1,77 @@
+<odoo>
+    <menuitem id="transfer_portal_main"
+              name="Transfer"
+              groups="hr.group_hr_manager"
+              sequence="3"/>
+    <record id="transfer_portal_action" model="ir.actions.act_window">
+        <field name="name">Employee Transfer</field>
+        <field name="res_model">transfer</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="transfer_portal_form" model="ir.ui.view">
+        <field name="name">Transfer portal form</field>
+        <field name="model">transfer</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_approve" string="Approve"
+                            type="object" class="btn-primary"
+                            groups="hr.group_hr_manager"
+                            attrs="{'invisible':[('check','=',True)]}"/>
+                    <field name="check" invisible="1"/>
+                    <button name="action_reject" string="Reject" type="object"
+                            groups="hr.group_hr_manager"
+                            attrs="{'invisible':[('check','=',True)]}"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="transfer,done"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="transfer_to_id"
+                                   domain="[('id', '!=', company_id)]"/>
+                        </group>
+                        <group>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Note">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="transfer_portal_tree" model="ir.ui.view">
+        <field name="name">Transfer portal tree</field>
+        <field name="model">transfer</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="employee_id"/>
+                <field name="company_id"/>
+                <field name="transfer_to_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+<!--    <record id="transfer_portal_search" model="ir.ui.view">-->
+<!--    <field name="name">transfer.portal.search</field>-->
+<!--    <field name="model">transfer</field>-->
+<!--    <field name="arch" type="xml">-->
+<!--        <search>-->
+<!--            <filter name="transfer"-->
+<!--                    string="Transfer"-->
+<!--                    domain="[('sate','=','transfer')]"-->
+<!--        </search>-->
+<!--    </field>-->
+<!--    </record>-->
+    <menuitem id="transfer_portal"
+              name="Transfer"
+              parent="transfer_portal_main"
+              action="transfer_portal_action"
+              sequence="1"/>
+</odoo>

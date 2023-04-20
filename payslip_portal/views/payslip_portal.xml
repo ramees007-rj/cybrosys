@@ -1,0 +1,70 @@
+<odoo>
+    <template id="portal_my_payslip"
+              inherit_id="portal.portal_my_home"
+              priority="32">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">My Payslip</t>
+                <t t-set="url" t-value="'/my/payslip'"/>
+                <t t-set="placeholder_count" t-value="'payslip_count'"/>
+            </t>
+        </xpath>
+    </template>
+    <template id="portal_my_home_menu_payslip"
+              inherit_id="portal.portal_breadcrumbs" priority="51">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'my_payslips'"
+                t-attf-class="breadcrumb-item active">
+                Payslips
+            </li>
+        </xpath>
+    </template>
+    <template id="portal_payslip" name="My Payslip">
+        <t t-call="portal.portal_layout">
+            <t t-if="not payslips">
+                <p>There are currently no Payslips for you.
+                </p>
+            </t>
+            <t t-if="payslips" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>Reference #</th>
+                        <th>Payslip Name</th>
+                        <th>Date From</th>
+                        <th>Date To</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="payslips" t-as="p">
+                        <tr>
+                            <td>
+                                <a t-att-href="p.get_portal_url(report_type='pdf')"
+                                   t-att-title="p.name">
+                                    <t t-esc="p.number"/>
+                                </a>
+                            </td>
+                            <td>
+                                <t t-esc="p.name"/>
+                            </td>
+                            <td>
+                                <t t-esc="p.date_from"/>
+                            </td>
+                            <td>
+                                <t t-esc="p.date_to"/>
+                            </td>
+                            <td>
+                                <t t-if="p.state=='draft'">
+                                    <span class="text-info">Draft</span>
+                                </t>
+                                <t t-else="">
+                                    <span class="text-success">Done</span>
+                                </t>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </t>
+        </t>
+    </template>
+</odoo>

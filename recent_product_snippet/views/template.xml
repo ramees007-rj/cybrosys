@@ -1,0 +1,125 @@
+<odoo>
+    <template id="basic_snippet" name="Recently Viewed Products">
+        <section class="container dynamic_snippet_blog">
+            <div id="multi-item-example"
+                 class="carousel slide carousel-multi-item"
+                 data-ride="carousel" style="padding-top:.5cm;">
+                <div>
+                    <h2 class="font-weight-light">
+                        Recently Viewed Products
+                    </h2>
+                </div>
+                <div class="carousel-inner" role="listbox">
+                    <t t-if="slide_active">
+                        <div class="carousel-item active">
+                            <div class="row">
+                                <t t-foreach="slide_active" t-as="active">
+                                    <div class="col-md-4">
+                                        <a class="o_product_link css_editable_mode_hidden"
+                                           t-att-href="active.website_url">
+                                            <div class="mb-2">
+                                                <img class="o_carousel_product_card_img_top card-img-top"
+                                                     style="width:5cm; height:5cm; padding:10px;"
+                                                     t-attf-src="/web/image/product.product/{{ active.id }}/image_1920"
+                                                />
+                                                <div class="card-body">
+                                                    <h6 class="o_wsale_products_item_title mb-1">
+                                                        <span class="text-primary text-decoration-none"
+                                                              t-esc="active.name"/>
+                                                    </h6>
+                                                    <span
+                                                            t-if="active.list_price"
+                                                            t-esc="active.list_price"
+                                                            t-options="{'widget': 'monetary', 'display_currency': active.currency_id}"/>
+
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="slide_1">
+                        <div class="carousel-item">
+                            <div class="row">
+                                <t t-foreach="slide_1" t-as="item_1">
+                                    <div class="col-md-4">
+                                        <a class="o_product_link css_editable_mode_hidden"
+                                           t-att-href="item_1.website_url">
+                                            <div class="mb-2">
+                                                <img class="o_carousel_product_card_img_top card-img-top"
+                                                     style="width:5cm; height:5cm; padding:10px;"
+                                                     t-attf-src="/web/image/product.product/{{ item_1.id }}/image_1920"
+                                                />
+                                                <div class="card-body">
+                                                    <h6 class="o_wsale_products_item_title mb-1">
+                                                        <span class="text-primary text-decoration-none"
+                                                              t-esc="item_1.name"/>
+                                                    </h6>
+                                                    <span
+                                                            t-if="item_1.list_price"
+                                                            t-esc="item_1.list_price"
+                                                            t-options="{'widget': 'monetary', 'display_currency': item_1.currency_id}"/>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="slide_2">
+                        <div class="carousel-item">
+                            <div class="row">
+                                <t t-foreach="slide_2" t-as="item_2">
+                                    <div class="col-md-4">
+                                        <a class="o_product_link css_editable_mode_hidden"
+                                           t-att-href="item_2.website_url">
+                                            <div class="mb-2">
+                                                <img class="o_carousel_product_card_img_top card-img-top"
+                                                     style="width:5cm; height:5cm; padding:10px;"
+                                                     t-attf-src="/web/image/product.product/{{ item_2.id }}/image_1920"
+                                                />
+                                                <div class="card-body">
+                                                    <h6 class="o_wsale_products_item_title mb-1">
+                                                        <span class="text-primary text-decoration-none"
+                                                              t-esc="item_2.name"/>
+                                                    </h6>
+                                                    <span
+                                                            t-if="item_2.list_price"
+                                                            t-esc="item_2.list_price"
+                                                            t-options="{'widget': 'monetary', 'display_currency': item_2.currency_id}"/>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                    <a class="carousel-control-prev text-black-50"
+                       href="#multi-item-example"
+                       data-slide="prev">
+                        <i class="fa fa-chevron-circle-left fa-2x"></i>
+                    </a>
+                    <a class="carousel-control-next text-black-50"
+                       href="#multi-item-example"
+                       data-slide="next">
+                        <i class="fa fa-chevron-circle-right fa-2x"></i>
+                    </a>
+                </div>
+                <div>
+                </div>
+            </div>
+        </section>
+    </template>
+    <template id="external_snippets" inherit_id="website.snippets"
+              priority="8">
+        <xpath expr="//div[@id='snippet_effect']//t[@t-snippet][last()]"
+               position="after">
+            <t t-snippet="recent_product_snippet.basic_snippet"
+               t-thumbnail="/recent_product_snippet/static/src/img/snippet/recent.png"/>
+        </xpath>
+    </template>
+</odoo>

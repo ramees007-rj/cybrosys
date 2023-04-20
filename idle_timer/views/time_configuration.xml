@@ -1,0 +1,54 @@
+<odoo>
+    <record id="idle_time_configuration" model="ir.ui.view">
+        <field name="name">idle.time.configuration</field>
+        <field name="model">survey.survey</field>
+        <field name="inherit_id" ref="survey.survey_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('o_checkbox_optional_field')]"
+                   position="after">
+                <div colspan="2" class="o_checkbox_optional_field">
+                    <label for="is_question_time_limit"
+                           string="Question Time Limit"/>
+                    <field name="is_question_time_limit" nolabel="1"/>
+                    <div attrs="{'invisible': [('is_question_time_limit', '=', False)]}">
+                        <field name="question_time_limit" widget="float_time"
+                               nolabel="1"
+                               class="oe_inline"/>
+                        minutes
+                        <div>
+                            <field name="idle_timer"
+                                   nolabel="1"
+                                   class="oe_inline"/>
+                            seconds
+                        </div>
+                    </div>
+                </div>
+
+            </xpath>
+        </field>
+    </record>
+    <template id="timer_question" name="Question Timer"
+              inherit_id="survey.survey_fill_form_start">
+        <xpath expr="//div[@t-if='survey.is_time_limited']" position="after">
+            <div t-if="survey.is_question_time_limit">
+                <p>
+                    <span>Time limit for each question:</span>
+                    <span class="font-weight-bold text-danger time_limit_q"
+                          t-field="survey.question_time_limit"
+                          t-options="{'widget': 'duration', 'unit': 'minute'}"></span>
+                </p>
+            </div>
+        </xpath>
+    </template>
+    <template id="timer_question_count" name="Timer Count Question"
+              inherit_id="survey.survey_fill_header" priority="8">
+        <xpath expr="//div[hasclass('row')]"
+               position="inside">
+            <div style="text-align:center;">
+                <div id="seconds"
+                     style="font-size: 25px">
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

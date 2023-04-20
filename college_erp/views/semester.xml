@@ -1,0 +1,53 @@
+<odoo>
+    <record id="configuration_semester_action" model="ir.actions.act_window">
+        <field name="name">Semester</field>
+        <field name="res_model">college.semester</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="configuration_semester_tree" model="ir.ui.view">
+        <field name="name">semester tree</field>
+        <field name="model">college.semester</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="number_of_semester"/>
+                <field name="course"/>
+            </tree>
+        </field>
+    </record>
+    <record id="configuration_semester_form" model="ir.ui.view">
+        <field name="name">semester form</field>
+        <field name="model">college.semester</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+<!--                    <div class="oe_button_box" name="button_box">-->
+<!--                        <button name="get_syllabus" class="oe_stat_button"-->
+<!--                                type="object" icon="fa-tags" domain="">-->
+<!--                            Syllabus-->
+<!--                        </button>-->
+<!--                    </div>-->
+                    <group>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <field name="number_of_semester"/>
+                        <field name="course"/>
+                    </group>
+                    <notebook>
+                        <page string="Subjects">
+                            <field name="subject_id" />
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <menuitem id="semester"
+              name="Semester"
+              parent="college_configuration"
+              action="configuration_semester_action"
+              sequence="1"/>
+</odoo>

@@ -1,0 +1,31 @@
+<odoo>
+    <record id="hr.hr_employee_comp_rule" model="ir.rule">
+        <field name="name">Employee Rule</field>
+        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="domain_force">
+            ['|',('company_id','=',False),('company_id','!=',False)]
+        </field>
+    </record>
+    <record id="hr.hr_employee_public_comp_rule" model="ir.rule">
+        <field name="name">Employee Rule</field>
+        <field name="model_id" ref="hr.model_hr_employee_public"/>
+        <field name="domain_force">
+            ['|',('company_id','=',False),('company_id','!=',False)]
+        </field>
+    </record>
+    <record id="resource.resource_resource_multi_company" model="ir.rule">
+        <field name="name">resource multi-company</field>
+        <field name="model_id" ref="resource.model_resource_resource"/>
+        <field name="domain_force">
+            ['|',('company_id','=',False),('company_id','!=',False)]
+        </field>
+    </record>
+    <record id="employee_transfer" model="ir.rule">
+        <field name="name">Transfer employee</field>
+        <field name="model_id" ref="employee_transfer.model_transfer"/>
+        <field name="domain_force">
+            ['|',('company_id','=',False),('company_id','!=',False)]
+        </field>
+    </record>
+
+</odoo>

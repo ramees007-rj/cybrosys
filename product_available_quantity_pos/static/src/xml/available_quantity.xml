@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="Rating" t-inherit="point_of_sale.ProductItem"
+       t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('product-name')]" position="inside">
+            <br/>
+            <span>
+                <t t-if="props.product.pos_location_qty>0">
+                    Available:<t t-esc="props.product.pos_location_qty"/>
+                </t>
+            </span>
+        </xpath>
+    </t>
+</templates>

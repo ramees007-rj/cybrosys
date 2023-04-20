@@ -1,0 +1,18 @@
+<odoo>
+    <record model="ir.module.category" id="discount_approval">
+        <field name="name">Discount Approval</field>
+        <field name="description">Access level of discount approval
+            module
+        </field>
+        <field name="sequence">20</field>
+    </record>
+    <record id="discount_approval_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="discount_approval"/>
+    </record>
+    <record id="discount_approval_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="discount_approval"/>
+        <field name="implied_ids" eval="[(4, ref('discount_approval_user'))]"/>
+    </record>
+</odoo>

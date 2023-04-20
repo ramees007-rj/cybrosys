@@ -1,0 +1,100 @@
+<odoo>
+    <template id="mark_sheet_report_class">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <t t-foreach="form" t-as="i">
+                    <div class="page">
+                        <h1 align="center">
+                            <t t-out="i['class_id'][1]"/>: Mark List
+                            <br/>
+                            <h3 align="center">
+                                <t t-out="course"/>
+                                -
+                                <t t-out="academic_year"/>
+                            </h3>
+                        </h1>
+                        <br/>
+                        <br/>
+                        <h3>
+                            Exam:
+                            <t t-out="i['exam_type']"/>
+                            <br/>
+                            <t t-set="count" t-value="0"/>
+                            <t t-foreach="data" t-as="t">
+                                <t t-set="count" t-value="count + 1"/>
+                            </t>
+                            Total:
+                            <t t-out="count"/>
+                            <br/>
+                            Pass:
+                            <t t-out="count - fail_count"/>
+                            <br/>
+                            Fail:
+                            <t t-out="fail_count"/>
+                        </h3>
+                        <table style="border:solid 1px; border-collapse: collapse; width:25cm;"
+                               align="center">
+                            <tr>
+                                <th style="border:solid 1px; border-collapse: collapse; padding:10px;">
+                                    Student Name
+                                </th>
+                                <t t-foreach="count_of_sub" t-as="sub">
+                                    <th style="border:solid 1px; border-collapse: collapse; padding:10px;">
+                                        Paper:
+                                        <t t-out="sub"/>
+                                    </th>
+                                </t>
+                                <th style="border:solid 1px; border-collapse: collapse; padding:10px;">
+                                    Obtained Mark
+                                </th>
+                                <th style="border:solid 1px; border-collapse: collapse; padding:10px;">
+                                    Total Mark
+                                </th>
+                                <th style="border:solid 1px; border-collapse: collapse; padding:10px;">
+                                    Pass/Fail
+                                </th>
+                            </tr>
+                            <t t-foreach="data" t-as="d">
+                                <tr>
+                                    <td style="border:solid 1px; border-collapse: collapse; padding:10px;">
+                                        <t t-esc="d['first_name']"/>
+                                    </td>
+                                    <t t-foreach="d['mark']" t-as="m">
+                                        <td style="border:solid 1px; border-collapse: collapse; padding:10px;">
+                                            <t t-esc="m"/>
+                                        </td>
+                                    </t>
+                                    <td style="border:solid 1px; border-collapse: collapse; padding:10px;">
+                                        <t t-set="ob_mark" t-value="0"/>
+                                        <t t-foreach="d['mark']" t-as="m">
+                                            <t t-set="ob_mark"
+                                               t-value="ob_mark + m"/>
+                                        </t>
+                                        <t t-out="ob_mark"/>
+                                    </td>
+                                    <td style="border:solid 1px; border-collapse: collapse; padding:10px;">
+                                        <t t-set="max_mark" t-value="0"/>
+                                        <t t-foreach="d['max_mark']" t-as="x">
+                                            <t t-set="max_mark"
+                                               t-value="max_mark + x"/>
+                                        </t>
+                                        <t t-out="max_mark"/>
+                                    </td>
+                                    <td style="border:solid 1px; border-collapse: collapse; padding:10px;">
+                                        <t t-set="pass_mark" t-value="0"/>
+                                        <t t-foreach="d['pass_mark']" t-as="y">
+                                            <t t-set="pass_mark"
+                                               t-value="pass_mark + y"/>
+                                        </t>
+                                        <t t-if="ob_mark >= pass_mark">Pass</t>
+                                        <t t-else="">Fail</t>
+                                    </td>
+                                </tr>
+                            </t>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

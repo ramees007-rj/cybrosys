@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+discount_approval.access_discount_limit,access_discount_limit,discount_approval.model_res_config_settings,,1,1,1,1

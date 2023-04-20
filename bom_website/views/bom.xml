@@ -1,0 +1,43 @@
+<odoo>
+    <template id="bom_product"
+              inherit_id="website_sale.cart_line_description_following_lines">
+        <xpath expr="//div[@t-if='line.get_description_following_lines()']"
+               position="after">
+            <div t-if="line.get_product_material()">
+                <table style="width:6cm;">
+                    <tr style="font-size:12px;">
+                        <td colspan="2" style="font-weight:bold;"
+                            align="center">
+                            Material Used
+                        </td>
+                    </tr>
+                    <tr style="font-size:12px;">
+                        <td style="font-weight:bold;">Product</td>
+                        <td style="font-weight:bold;">Quantity</td>
+                    </tr>
+                    <div class="text-muted d-none d-md-block small">
+                        <tr style="font-size:10px;"
+                            t-foreach="line.get_product_material()" t-as="j">
+                            <td>
+                                <t t-esc="j['name']"/>
+                            </td>
+                            <td>
+                                <t t-esc="j['qty']"/>
+                            </td>
+                        </tr>
+                    </div>
+                </table>
+            </div>
+        </xpath>
+    </template>
+    <record id="website_configuration_product" model="ir.ui.view">
+        <field name="name">website.configuration.product</field>
+        <field name="model">website</field>
+        <field name="inherit_id" ref="website.view_website_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='other']" position="inside">
+                <field name="product" widget="many2many_tags"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,60 @@
+<odoo>
+    <record id="promotion_action" model="ir.actions.act_window">
+        <field name="name">Promotion</field>
+        <field name="res_model">college.class.promotion</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="promotion_form" model="ir.ui.view">
+        <field name="name">promotion form</field>
+        <field name="model">college.class.promotion</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="generate_promotion" type="object"
+                            class="oe_highlight" string="Generate Promotion"
+                            attrs="{'invisible':[('gp_button_count','&gt;',0)]}"/>
+                    <button name="Promote" type="object"
+                            class="oe_highlight" string="Promote"
+                            attrs="{'invisible':['|',('gp_button_count','&lt;=',0),('state','=','completed')]}"/>
+                    <field name="gp_button_count" invisible="1"/>
+                      <field name="state" widget="statusbar"
+                           statusbar_visible="pending,completed"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="exam_id"/>
+                            <field name="class_id"/>
+                        </group>
+                        <group>
+                            <field name="semester"/>
+                            <field name="course"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Qualified Students">
+                            <field name="qualified_student_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+        <record id="promotion_tree" model="ir.ui.view">
+        <field name="name">Promotion_tree</field>
+        <field name="model">college.class.promotion</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="exam_id"/>
+                <field name="class_id"/>
+                <field name="semester"/>
+                <field name="course"/>
+            </tree>
+        </field>
+    </record>
+    <menuitem id="promotion"
+              name="Promotion"
+              parent="examination"
+              action="promotion_action"
+              sequence="2"/>
+</odoo>

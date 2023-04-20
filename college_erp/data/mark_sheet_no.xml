@@ -1,0 +1,8 @@
+<odoo>
+    <record id="seq_mark_sheet_no" model="ir.sequence">
+        <field name="name">Mark Sheet No</field>
+        <field name="code">mark.sheet.no</field>
+        <field name="prefix">MS</field>
+        <field name="padding">10</field>
+    </record>
+</odoo>

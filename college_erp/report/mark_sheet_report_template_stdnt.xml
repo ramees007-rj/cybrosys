@@ -1,0 +1,68 @@
+<odoo>
+    <template id="mark_sheet_report_student">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <t t-foreach="form" t-as="i">
+                    <div class="page">
+                        <h1 align="center">
+                            <t t-out="i['student_id'][1]"/>: Mark List
+                            <br/>
+                            <h3 align="center">
+                                <t t-out="course"/>
+                                -<t t-out="academic_year"/>
+                            </h3>
+                        </h1>
+                        <br/>
+                        <br/>
+                        <h3>
+                            Exam:
+                            <t t-out="i['exam_type']"/>
+                            <br/>
+                            Result:
+                            <t t-out="result"/>
+
+                        </h3>
+                    </div>
+                </t>
+                <br/>
+                <br/>
+                <table style="border:solid 1px; border-collapse: collapse; width:25cm;"
+                       align="center">
+                    <tr>
+                        <th style="border:solid 1px; border-collapse: collapse; padding:10px;">
+                            Subject
+                        </th>
+                        <th style="border:solid 1px; border-collapse: collapse; padding:10px;">
+                            Mark
+                        </th>
+                        <th style="border:solid 1px; border-collapse: collapse; padding:10px;">
+                            Pass Mark
+                        </th>
+                        <th style="border:solid 1px; border-collapse: collapse; padding:10px;">
+                            Pass/Fail
+                        </th>
+                    </tr>
+                    <t t-foreach="data" t-as="s">
+                        <!--                                                <t t-foreach="s" t-as="i">-->
+                        <tr>
+                            <td style="border:solid 1px; border-collapse: collapse; padding:10px;">
+                                <t t-esc="s['name']"/>
+                            </td>
+                            <td style="border:solid 1px; border-collapse: collapse; padding:10px;">
+                                <t t-esc="s['mark']"/>
+                            </td>
+                            <td style="border:solid 1px; border-collapse: collapse; padding:10px;">
+                                <t t-esc="s['pass_mark']"/>
+                            </td>
+                            <td style="border:solid 1px; border-collapse: collapse; padding:10px;">
+                                <t t-if="s['subject_pass_or_fail']">Pass</t>
+                                <t t-else="">Fail</t>
+                            </td>
+                        </tr>
+                        <!--                                                </t>-->
+                    </t>
+                </table>
+            </t>
+        </t>
+    </template>
+</odoo>

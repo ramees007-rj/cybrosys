@@ -1,0 +1,96 @@
+<odoo>
+    <record id="college_exam_action" model="ir.actions.act_window">
+        <field name="name">College Exam</field>
+        <field name="res_model">college.exam</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="college_exam_form" model="ir.ui.view">
+        <field name="name">College Exam Form</field>
+        <field name="model">college.exam</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="button_confirm" type="object" states="draft"
+                            string="Confirm" class="oe_highlight"/>
+                    <button name="button_complete" type="object"
+                            states="confirmed"
+                            string="Complete" class="oe_highlight"/>
+                    <button name="button_action_draft" type="object"
+                            states="confirmed"
+                            string="Set to Draft"/>
+                    <button name="button_generate_mark" type="object"
+                            states="completed" string="Generate Mark"
+                            class="oe_highlight">
+                    </button>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirmed,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="get_valuation" class="oe_stat_button"
+                                type="object" icon="fa-tags"
+                                attrs="{'invisible': [('valuation_count', '&lt;=', 0)]}">
+                            <field string="Valuation" name="valuation_count"
+                                   widget="statinfo"/>
+                        </button>
+                    </div>
+                    <group>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="exam_type"/>
+                            <field name="class_id"/>
+                            <field name="semester"/>
+
+                        </group>
+                        <group>
+                            <field name="course"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Papers">
+                            <field name="paper_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="max_mark"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="college_exam_tree" model="ir.ui.view">
+        <field name="name">Exam Tree</field>
+        <field name="model">college.exam</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="class_id"/>
+                <field name="semester" optional="hide"/>
+                <field name="exam_type"/>
+                <field name="course"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="state" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+    <menuitem id="examination"
+              name="Examination"
+              parent="college_main_menu"
+              sequence="5"/>
+    <menuitem id="collage_exam_type"
+              name="Exam Type"
+              parent="examination"
+              action="college_exam_action"
+              sequence="1"/>
+</odoo>
